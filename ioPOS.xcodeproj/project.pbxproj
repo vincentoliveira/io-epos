@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		BF78FF5819DC590200E60ED0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5719DC590200E60ED0 /* AppDelegate.swift */; };
 		BF78FF5B19DC590200E60ED0 /* ioPOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5919DC590200E60ED0 /* ioPOS.xcdatamodeld */; };
-		BF78FF5D19DC590200E60ED0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5C19DC590200E60ED0 /* ViewController.swift */; };
+		BF78FF5D19DC590200E60ED0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5C19DC590200E60ED0 /* LoginViewController.swift */; };
 		BF78FF6019DC590200E60ED0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF78FF5E19DC590200E60ED0 /* Main.storyboard */; };
 		BF78FF6219DC590200E60ED0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF78FF6119DC590200E60ED0 /* Images.xcassets */; };
 		BF78FF6519DC590200E60ED0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */; };
@@ -31,7 +31,7 @@
 		BF78FF5619DC590200E60ED0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF78FF5719DC590200E60ED0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF78FF5A19DC590200E60ED0 /* ioPOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ioPOS.xcdatamodel; sourceTree = "<group>"; };
-		BF78FF5C19DC590200E60ED0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BF78FF5C19DC590200E60ED0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BF78FF5F19DC590200E60ED0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF78FF6119DC590200E60ED0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BF78FF6419DC590200E60ED0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				BF78FF5719DC590200E60ED0 /* AppDelegate.swift */,
-				BF78FF5C19DC590200E60ED0 /* ViewController.swift */,
+				BF78FF5C19DC590200E60ED0 /* LoginViewController.swift */,
 				BF78FF5E19DC590200E60ED0 /* Main.storyboard */,
 				BF78FF6119DC590200E60ED0 /* Images.xcassets */,
 				BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */,
@@ -215,7 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF78FF5D19DC590200E60ED0 /* ViewController.swift in Sources */,
+				BF78FF5D19DC590200E60ED0 /* LoginViewController.swift in Sources */,
 				BF78FF5B19DC590200E60ED0 /* ioPOS.xcdatamodeld in Sources */,
 				BF78FF5819DC590200E60ED0 /* AppDelegate.swift in Sources */,
 			);
