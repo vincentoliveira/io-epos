@@ -1,0 +1,439 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BF78FF5819DC590200E60ED0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5719DC590200E60ED0 /* AppDelegate.swift */; };
+		BF78FF5B19DC590200E60ED0 /* ioPOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5919DC590200E60ED0 /* ioPOS.xcdatamodeld */; };
+		BF78FF5D19DC590200E60ED0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5C19DC590200E60ED0 /* ViewController.swift */; };
+		BF78FF6019DC590200E60ED0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF78FF5E19DC590200E60ED0 /* Main.storyboard */; };
+		BF78FF6219DC590200E60ED0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF78FF6119DC590200E60ED0 /* Images.xcassets */; };
+		BF78FF6519DC590200E60ED0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */; };
+		BF78FF7119DC590200E60ED0 /* ioPOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF7019DC590200E60ED0 /* ioPOSTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BF78FF6B19DC590200E60ED0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF78FF4A19DC590200E60ED0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF78FF5119DC590200E60ED0;
+			remoteInfo = ioPOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BF78FF5219DC590200E60ED0 /* ioPOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ioPOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF78FF5619DC590200E60ED0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF78FF5719DC590200E60ED0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BF78FF5A19DC590200E60ED0 /* ioPOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ioPOS.xcdatamodel; sourceTree = "<group>"; };
+		BF78FF5C19DC590200E60ED0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BF78FF5F19DC590200E60ED0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BF78FF6119DC590200E60ED0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BF78FF6419DC590200E60ED0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		BF78FF6A19DC590200E60ED0 /* ioPOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ioPOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF78FF6F19DC590200E60ED0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF78FF7019DC590200E60ED0 /* ioPOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ioPOSTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BF78FF4F19DC590200E60ED0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF78FF6719DC590200E60ED0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BF78FF4919DC590200E60ED0 = {
+			isa = PBXGroup;
+			children = (
+				BF78FF5419DC590200E60ED0 /* ioPOS */,
+				BF78FF6D19DC590200E60ED0 /* ioPOSTests */,
+				BF78FF5319DC590200E60ED0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BF78FF5319DC590200E60ED0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BF78FF5219DC590200E60ED0 /* ioPOS.app */,
+				BF78FF6A19DC590200E60ED0 /* ioPOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BF78FF5419DC590200E60ED0 /* ioPOS */ = {
+			isa = PBXGroup;
+			children = (
+				BF78FF5719DC590200E60ED0 /* AppDelegate.swift */,
+				BF78FF5C19DC590200E60ED0 /* ViewController.swift */,
+				BF78FF5E19DC590200E60ED0 /* Main.storyboard */,
+				BF78FF6119DC590200E60ED0 /* Images.xcassets */,
+				BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */,
+				BF78FF5919DC590200E60ED0 /* ioPOS.xcdatamodeld */,
+				BF78FF5519DC590200E60ED0 /* Supporting Files */,
+			);
+			path = ioPOS;
+			sourceTree = "<group>";
+		};
+		BF78FF5519DC590200E60ED0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BF78FF5619DC590200E60ED0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BF78FF6D19DC590200E60ED0 /* ioPOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				BF78FF7019DC590200E60ED0 /* ioPOSTests.swift */,
+				BF78FF6E19DC590200E60ED0 /* Supporting Files */,
+			);
+			path = ioPOSTests;
+			sourceTree = "<group>";
+		};
+		BF78FF6E19DC590200E60ED0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BF78FF6F19DC590200E60ED0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BF78FF5119DC590200E60ED0 /* ioPOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF78FF7419DC590200E60ED0 /* Build configuration list for PBXNativeTarget "ioPOS" */;
+			buildPhases = (
+				BF78FF4E19DC590200E60ED0 /* Sources */,
+				BF78FF4F19DC590200E60ED0 /* Frameworks */,
+				BF78FF5019DC590200E60ED0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ioPOS;
+			productName = ioPOS;
+			productReference = BF78FF5219DC590200E60ED0 /* ioPOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BF78FF6919DC590200E60ED0 /* ioPOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF78FF7719DC590200E60ED0 /* Build configuration list for PBXNativeTarget "ioPOSTests" */;
+			buildPhases = (
+				BF78FF6619DC590200E60ED0 /* Sources */,
+				BF78FF6719DC590200E60ED0 /* Frameworks */,
+				BF78FF6819DC590200E60ED0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BF78FF6C19DC590200E60ED0 /* PBXTargetDependency */,
+			);
+			name = ioPOSTests;
+			productName = ioPOSTests;
+			productReference = BF78FF6A19DC590200E60ED0 /* ioPOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BF78FF4A19DC590200E60ED0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = InnovOrder;
+				TargetAttributes = {
+					BF78FF5119DC590200E60ED0 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					BF78FF6919DC590200E60ED0 = {
+						CreatedOnToolsVersion = 6.0.1;
+						TestTargetID = BF78FF5119DC590200E60ED0;
+					};
+				};
+			};
+			buildConfigurationList = BF78FF4D19DC590200E60ED0 /* Build configuration list for PBXProject "ioPOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BF78FF4919DC590200E60ED0;
+			productRefGroup = BF78FF5319DC590200E60ED0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BF78FF5119DC590200E60ED0 /* ioPOS */,
+				BF78FF6919DC590200E60ED0 /* ioPOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BF78FF5019DC590200E60ED0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF78FF6019DC590200E60ED0 /* Main.storyboard in Resources */,
+				BF78FF6519DC590200E60ED0 /* LaunchScreen.xib in Resources */,
+				BF78FF6219DC590200E60ED0 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF78FF6819DC590200E60ED0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BF78FF4E19DC590200E60ED0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF78FF5D19DC590200E60ED0 /* ViewController.swift in Sources */,
+				BF78FF5B19DC590200E60ED0 /* ioPOS.xcdatamodeld in Sources */,
+				BF78FF5819DC590200E60ED0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF78FF6619DC590200E60ED0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF78FF7119DC590200E60ED0 /* ioPOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BF78FF6C19DC590200E60ED0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF78FF5119DC590200E60ED0 /* ioPOS */;
+			targetProxy = BF78FF6B19DC590200E60ED0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BF78FF5E19DC590200E60ED0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BF78FF5F19DC590200E60ED0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BF78FF6419DC590200E60ED0 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BF78FF7219DC590200E60ED0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		BF78FF7319DC590200E60ED0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BF78FF7519DC590200E60ED0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ioPOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BF78FF7619DC590200E60ED0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ioPOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		BF78FF7819DC590200E60ED0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ioPOSTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ioPOS.app/ioPOS";
+			};
+			name = Debug;
+		};
+		BF78FF7919DC590200E60ED0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ioPOSTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ioPOS.app/ioPOS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BF78FF4D19DC590200E60ED0 /* Build configuration list for PBXProject "ioPOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF78FF7219DC590200E60ED0 /* Debug */,
+				BF78FF7319DC590200E60ED0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BF78FF7419DC590200E60ED0 /* Build configuration list for PBXNativeTarget "ioPOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF78FF7519DC590200E60ED0 /* Debug */,
+				BF78FF7619DC590200E60ED0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		BF78FF7719DC590200E60ED0 /* Build configuration list for PBXNativeTarget "ioPOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF78FF7819DC590200E60ED0 /* Debug */,
+				BF78FF7919DC590200E60ED0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BF78FF5919DC590200E60ED0 /* ioPOS.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BF78FF5A19DC590200E60ED0 /* ioPOS.xcdatamodel */,
+			);
+			currentVersion = BF78FF5A19DC590200E60ED0 /* ioPOS.xcdatamodel */;
+			path = ioPOS.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = BF78FF4A19DC590200E60ED0 /* Project object */;
+}
