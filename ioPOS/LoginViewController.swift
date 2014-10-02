@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class LoginViewController: UIViewController, RestClientProtocol {
     
@@ -17,7 +18,23 @@ class LoginViewController: UIViewController, RestClientProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        var appDeleguage : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
+        var context : NSManagedObjectContext = appDeleguage.managedObjectContext!
+        
+        var request = NSFetchRequest(entityName: "RestaurantToken")
+        request.returnsObjectsAsFaults = false
+        
+        var results:NSArray = context.executeFetchRequest(request, error: nil)!
+        
+        if results.count > 0 {
+            let restaurantToken:NSManagedObject = results[0] as NSManagedObject
+            loginTextField.text = restaurantToken.valueForKey("email") as? String
+            
+            redirectToPOS()
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,12 +56,25 @@ class LoginViewController: UIViewController, RestClientProtocol {
         println(results)
         
         if let token: NSDictionary = results["restaurant_token"] as? NSDictionary {
-            errorLabel.text = token["token"] as String!
+            var appDeleguage : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
+            var context : NSManagedObjectContext = appDeleguage.managedObjectContext!
+            
+            // Save restaurant token
+            var newRestaurantToken = NSEntityDescription.insertNewObjectForEntityForName("RestaurantToken", inManagedObjectContext: context) as NSManagedObject
+            newRestaurantToken.setValue(token["token"] as String, forKey: "token")
+            newRestaurantToken.setValue(loginTextField.text as String, forKey: "email")
+            newRestaurantToken.setValue(passwordTextField.text as String, forKey: "password")
+            
+            context.save(nil)
+            
+            redirectToPOS()
         } else {
             errorLabel.text = results["message"] as String!
         }
         
         self.activityIndicatorView.stopAnimating();
+        
+        
     }
 
     func didFailWithError(error: NSError!) {
@@ -52,6 +82,9 @@ class LoginViewController: UIViewController, RestClientProtocol {
         errorLabel.text = "Une erreur s'est produite"
     }
 
+    func redirectToPOS() {
+        
+    }
 
 }
 

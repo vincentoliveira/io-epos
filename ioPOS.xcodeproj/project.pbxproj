@@ -96,9 +96,9 @@
 				BF78FF5719DC590200E60ED0 /* AppDelegate.swift */,
 				BF78FF5C19DC590200E60ED0 /* LoginViewController.swift */,
 				BF78FF5E19DC590200E60ED0 /* Main.storyboard */,
-				BF78FF6119DC590200E60ED0 /* Images.xcassets */,
 				BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */,
 				BF78FF5919DC590200E60ED0 /* ioPOS.xcdatamodeld */,
+				BF78FF6119DC590200E60ED0 /* Images.xcassets */,
 				BF78FF5519DC590200E60ED0 /* Supporting Files */,
 			);
 			path = ioPOS;
