@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class MenuViewController: UITableViewController {
 
@@ -41,7 +42,17 @@ class MenuViewController: UITableViewController {
 
     @IBAction func deconnexion(sender: AnyObject) {
         //Remove token
-        println("Deconnexion")
+        var appDeleguage : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
+        var context : NSManagedObjectContext = appDeleguage.managedObjectContext!
+        
+        var request = NSFetchRequest(entityName: "RestaurantToken");
+        request.returnsObjectsAsFaults = false;
+        
+        var results:NSArray = context.executeFetchRequest(request, error: nil)!
+        for token in results {
+            context.deleteObject(token as NSManagedObject);
+        }
+        context.save(nil);
     }
     
     /*

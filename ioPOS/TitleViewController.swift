@@ -7,13 +7,19 @@
 //
 
 import UIKit
+import CoreData
 
-class TitleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TitleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, RestClientProtocol {
 
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        loadOrders()
+        self.activityIndicatorView.startAnimating()
+        self.activityIndicatorView.hidesWhenStopped = true;
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,6 +41,53 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         return cell
     }
+    
+    func loadOrders() {
+        errorLabel.text = nil
+        self.activityIndicatorView.startAnimating();
+        
+        let restClient = RestClient()
+        restClient.delegate = self;
+        restClient.getOrders("NormanWordpress");
+    }
+    
+    func didRecieveResponse(results: NSDictionary) {
+        // Store the results in our table data array
+        //println(results)
+        
+        var appDeleguage : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
+        var context : NSManagedObjectContext = appDeleguage.managedObjectContext!
+        
+        let ordersArray = results["orders"] as NSArray;
+        for order in ordersArray {
+            // Save orders
+            var newCart = NSEntityDescription.insertNewObjectForEntityForName("Cart", inManagedObjectContext: context) as NSManagedObject
+            
+            let client = order["client"] as NSDictionary
+            newCart.setValue(client["id"] as Int, forKey: "clientId")
+            
+            let delivery = order["delivery_date"] as NSDictionary
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-mm-dd' 'HH:mm:ss"
+            let date = dateFormatter.dateFromString(delivery["date"] as String)
+            newCart.setValue(date, forKey: "delivery")
+            
+            newCart.setValue(order["id"] as Int, forKey: "id")
+            newCart.setValue(order["status"] as String, forKey: "status")
+            newCart.setValue(order["total"] as Float, forKey: "total")
+            newCart.setValue(order["total_unpayed"] as Float, forKey: "total_unpayed")
+            println("New Cart: " + newCart.description)
+        }
+        context.save(nil)
+        
+        self.activityIndicatorView.stopAnimating();
+    }
+    
+    func didFailWithError(error: NSError!) {
+        self.activityIndicatorView.stopAnimating();
+        errorLabel.text = "Une erreur s'est produite"
+    }
+    
     /*
     // MARK: - Navigation
 

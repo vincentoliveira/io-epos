@@ -73,8 +73,6 @@ class LoginViewController: UIViewController, RestClientProtocol {
         }
         
         self.activityIndicatorView.stopAnimating();
-        
-        
     }
 
     func didFailWithError(error: NSError!) {
@@ -83,7 +81,7 @@ class LoginViewController: UIViewController, RestClientProtocol {
     }
 
     func redirectToPOS() {
-        
+        performSegueWithIdentifier("logToPos", sender: self)
     }
 
 }

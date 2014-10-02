@@ -21,6 +21,8 @@ class RestClient: NSObject {
             url += "?" + p
         }
         
+        println(url)
+        
         return NSURL(string: url)
     }
     
@@ -30,12 +32,8 @@ class RestClient: NSObject {
             data += "&\(key)=\(value)"
         }
         
-        
-        NSLog("Data: %@", data)
-        
         return (data as NSString).substringFromIndex(1).dataUsingEncoding(NSUTF8StringEncoding)!
     }
-    
     
     func checkAuth(email: String, password: String) {
         let apiUrl = "/restaurant/auth.json"
@@ -45,10 +43,22 @@ class RestClient: NSObject {
         let url = generateUrl(apiUrl)
         let data = generateData(params);
         
-        call(url, data: data, method: method)
+        call(url, method: method, data: data)
     }
     
-    func call(url: NSURL, data: NSData, method: String = "GET") {
+    /**
+      * Get list of orders
+    **/
+    func getOrders(restaurant: String) {
+        let apiUrl = "/order/all.json"
+        let method = "GET"
+        
+        let url = generateUrl(apiUrl, params: "token=" + restaurant)
+        
+        call(url)
+    }
+    
+    func call(url: NSURL, method: String = "GET", data: NSData? = nil) {
         println("Call: \(method) \(url) with \(data)")
 
         var request = NSMutableURLRequest(URL: url)
