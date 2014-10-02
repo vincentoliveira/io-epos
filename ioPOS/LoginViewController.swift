@@ -8,10 +8,12 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, RestClientProtocol {
     
+    @IBOutlet var errorLabel : UILabel!
     @IBOutlet var loginTextField : UITextField!
     @IBOutlet var passwordTextField : UITextField!
+    @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +26,30 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func onLoginClick(sender : AnyObject) {
-        NSLog("Click: %@ / %@", loginTextField.text, passwordTextField.text)
+        errorLabel.text = nil
+        self.activityIndicatorView.startAnimating();
+        
+        let restClient = RestClient()
+        restClient.delegate = self;
+        restClient.checkAuth(loginTextField.text, password: passwordTextField.text)
+    }
+    
+    func didRecieveResponse(results: NSDictionary) {
+        // Store the results in our table data array
+        println(results)
+        
+        if let token: NSDictionary = results["restaurant_token"] as? NSDictionary {
+            errorLabel.text = token["token"] as String!
+        } else {
+            errorLabel.text = results["message"] as String!
+        }
+        
+        self.activityIndicatorView.stopAnimating();
+    }
+
+    func didFailWithError(error: NSError!) {
+        self.activityIndicatorView.stopAnimating();
+        errorLabel.text = "Une erreur s'est produite"
     }
 
 

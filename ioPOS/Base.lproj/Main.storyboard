@@ -7,7 +7,6 @@
         <!--InnovOrder-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="ioPOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
@@ -42,16 +41,31 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="kIc-fu-30K">
+                                <rect key="frame" x="494" y="219" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="0.49952746980000001" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oUa-up-27B">
+                                <rect key="frame" x="368" y="190" width="289" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="InnovOrder" id="GtQ-2h-DGQ"/>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="kIc-fu-30K" id="dOC-fR-lGE"/>
+                        <outlet property="errorLabel" destination="oUa-up-27B" id="Ngf-gB-6Rp"/>
                         <outlet property="loginTextField" destination="ZLn-hG-eA1" id="gLc-OX-bIh"/>
                         <outlet property="passwordTextField" destination="d3A-tR-VkB" id="j9c-QU-QQL"/>
                         <segue destination="ex7-MH-pKM" kind="replace" identifier="segue_login" splitViewControllerTargetIndex="1" id="kxu-kZ-gF0"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1265" y="1000"/>
         </scene>
