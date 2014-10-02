@@ -14,6 +14,8 @@
 		BF78FF6219DC590200E60ED0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF78FF6119DC590200E60ED0 /* Images.xcassets */; };
 		BF78FF6519DC590200E60ED0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */; };
 		BF78FF7119DC590200E60ED0 /* ioPOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF7019DC590200E60ED0 /* ioPOSTests.swift */; };
+		BF86321419DD590D00040F86 /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86321319DD590D00040F86 /* TitleViewController.swift */; };
+		BF86321619DD7F6300040F86 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86321519DD7F6300040F86 /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		BF78FF6A19DC590200E60ED0 /* ioPOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ioPOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF78FF6F19DC590200E60ED0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF78FF7019DC590200E60ED0 /* ioPOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ioPOSTests.swift; sourceTree = "<group>"; };
+		BF86321319DD590D00040F86 /* TitleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleViewController.swift; sourceTree = "<group>"; };
+		BF86321519DD7F6300040F86 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 				BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */,
 				BF78FF5919DC590200E60ED0 /* ioPOS.xcdatamodeld */,
 				BF78FF5519DC590200E60ED0 /* Supporting Files */,
+				BF86321319DD590D00040F86 /* TitleViewController.swift */,
+				BF86321519DD7F6300040F86 /* MenuViewController.swift */,
 			);
 			path = ioPOS;
 			sourceTree = "<group>";
@@ -216,6 +222,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF78FF5D19DC590200E60ED0 /* LoginViewController.swift in Sources */,
+				BF86321619DD7F6300040F86 /* MenuViewController.swift in Sources */,
+				BF86321419DD590D00040F86 /* TitleViewController.swift in Sources */,
 				BF78FF5B19DC590200E60ED0 /* ioPOS.xcdatamodeld in Sources */,
 				BF78FF5819DC590200E60ED0 /* AppDelegate.swift in Sources */,
 			);
@@ -411,6 +419,7 @@
 				BF78FF7619DC590200E60ED0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BF78FF7719DC590200E60ED0 /* Build configuration list for PBXNativeTarget "ioPOSTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +428,7 @@
 				BF78FF7919DC590200E60ED0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
