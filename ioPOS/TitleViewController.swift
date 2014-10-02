@@ -53,14 +53,13 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func didRecieveResponse(results: NSDictionary) {
         // Store the results in our table data array
-        //println(results)
         
         var appDeleguage : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
         var context : NSManagedObjectContext = appDeleguage.managedObjectContext!
         
         let ordersArray = results["orders"] as NSArray;
         for order in ordersArray {
-            // Save orders
+            // Parse orders
             var newCart = NSEntityDescription.insertNewObjectForEntityForName("Cart", inManagedObjectContext: context) as NSManagedObject
             
             let client = order["client"] as NSDictionary
@@ -76,6 +75,15 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
             newCart.setValue(order["status"] as String, forKey: "status")
             newCart.setValue(order["total"] as Float, forKey: "total")
             newCart.setValue(order["total_unpayed"] as Float, forKey: "total_unpayed")
+            
+            var products: NSSet = NSSet()
+            let productsArray = order["products"] as NSArray;
+            for product in productsArray {
+                //TODO
+                
+            }
+            newCart.setValue(products, forKey: "products")
+            
             println("New Cart: " + newCart.description)
         }
         context.save(nil)

@@ -7,12 +7,12 @@
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="total" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="total_unpayed" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product" inverseName="cart" inverseEntity="Product" syncable="YES"/>
+        <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="cart" inverseEntity="Product" syncable="YES"/>
     </entity>
     <entity name="Product" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="product" inverseEntity="Cart" syncable="YES"/>
+        <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="products" inverseEntity="Cart" syncable="YES"/>
     </entity>
     <entity name="RestaurantToken" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -21,7 +21,7 @@
     </entity>
     <elements>
         <element name="RestaurantToken" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Cart" positionX="-63" positionY="9" width="128" height="148"/>
-        <element name="Product" positionX="-54" positionY="27" width="128" height="88"/>
+        <element name="Cart" positionX="-63" positionY="225" width="128" height="148"/>
+        <element name="Product" positionX="196" positionY="83" width="128" height="88"/>
     </elements>
 </model>
