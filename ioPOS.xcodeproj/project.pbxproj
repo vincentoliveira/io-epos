@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF3D35CA19DD48220017FD2B /* RestClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3D35C919DD48220017FD2B /* RestClientProtocol.swift */; };
+		BF3D35CC19DD48490017FD2B /* RestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3D35CB19DD48490017FD2B /* RestClient.swift */; };
 		BF78FF5819DC590200E60ED0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5719DC590200E60ED0 /* AppDelegate.swift */; };
 		BF78FF5B19DC590200E60ED0 /* ioPOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5919DC590200E60ED0 /* ioPOS.xcdatamodeld */; };
 		BF78FF5D19DC590200E60ED0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78FF5C19DC590200E60ED0 /* LoginViewController.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF3D35C919DD48220017FD2B /* RestClientProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClientProtocol.swift; sourceTree = "<group>"; };
+		BF3D35CB19DD48490017FD2B /* RestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		BF78FF5219DC590200E60ED0 /* ioPOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ioPOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF78FF5619DC590200E60ED0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF78FF5719DC590200E60ED0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +66,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF3D35C819DD47E80017FD2B /* RestClient */ = {
+			isa = PBXGroup;
+			children = (
+				BF3D35C919DD48220017FD2B /* RestClientProtocol.swift */,
+				BF3D35CB19DD48490017FD2B /* RestClient.swift */,
+			);
+			name = RestClient;
+			sourceTree = "<group>";
+		};
 		BF78FF4919DC590200E60ED0 = {
 			isa = PBXGroup;
 			children = (
@@ -83,12 +96,13 @@
 		BF78FF5419DC590200E60ED0 /* ioPOS */ = {
 			isa = PBXGroup;
 			children = (
+				BF3D35C819DD47E80017FD2B /* RestClient */,
 				BF78FF5719DC590200E60ED0 /* AppDelegate.swift */,
 				BF78FF5C19DC590200E60ED0 /* LoginViewController.swift */,
 				BF78FF5E19DC590200E60ED0 /* Main.storyboard */,
-				BF78FF6119DC590200E60ED0 /* Images.xcassets */,
 				BF78FF6319DC590200E60ED0 /* LaunchScreen.xib */,
 				BF78FF5919DC590200E60ED0 /* ioPOS.xcdatamodeld */,
+				BF78FF6119DC590200E60ED0 /* Images.xcassets */,
 				BF78FF5519DC590200E60ED0 /* Supporting Files */,
 				BF86321319DD590D00040F86 /* TitleViewController.swift */,
 				BF86321519DD7F6300040F86 /* MenuViewController.swift */,
@@ -225,6 +239,8 @@
 				BF86321619DD7F6300040F86 /* MenuViewController.swift in Sources */,
 				BF86321419DD590D00040F86 /* TitleViewController.swift in Sources */,
 				BF78FF5B19DC590200E60ED0 /* ioPOS.xcdatamodeld in Sources */,
+				BF3D35CA19DD48220017FD2B /* RestClientProtocol.swift in Sources */,
+				BF3D35CC19DD48490017FD2B /* RestClient.swift in Sources */,
 				BF78FF5819DC590200E60ED0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
