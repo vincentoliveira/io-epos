@@ -50,7 +50,7 @@ class RestClient: NSObject {
       * Get list of orders
     **/
     func getOrders(restaurant: String) {
-        let apiUrl = "/order/all.json"
+        let apiUrl = "/order/current.json"
         let method = "GET"
         
         let url = generateUrl(apiUrl, params: "token=" + restaurant)
