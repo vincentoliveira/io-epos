@@ -12,10 +12,12 @@ import CoreData
 class TitleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, RestClientProtocol {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var detailView: OrderView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     let cellIdentifier = "OrderCell"
+    var timer = NSTimer()
     var items: [NSObject] = [NSObject]()
     
     override func viewDidLoad() {
@@ -29,10 +31,17 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.tableView.dataSource = self
         //-------------------------------
         
-        self.tableView.registerClass(OrderTableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
         self.tableView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         
+        self.tableView.registerClass(OrderTableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
+        //var cellNib = UINib(nibName:"OrderTableViewCell", bundle: nil)
+        //self.tableView.registerNib(cellNib, forCellReuseIdentifier: self.cellIdentifier)
+        self.tableView.rowHeight = 100
+        
         loadOrders()
+        let aSelector: Selector = "loadOrders"
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: aSelector, userInfo: nil, repeats: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,38 +55,20 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier) as OrderTableViewCell
-        
-        cell.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
-        cell.textLabel?.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        
-        var id = self.items[indexPath.row].valueForKey("id").description
-        cell.idLabel = UILabel()
-        cell.idLabel?.text = "N° \(id)"
-        
-        var price:String = (self.items[indexPath.row].valueForKey("total") as Float).description
-        if (self.items[indexPath.row].valueForKey("total_unpayed") as Float != 0) {
-            price += "€ UNPAYED "
-        } else {
-            price += "€ PAYED "
-        }
-        cell.priceLabel?.text = price
-        //cell.textLabel?.text = id
-        //cell.detailTextLabel?.text = label
-        
-        if cell.priceLabel == nil {
-            println("fuck it")
-        }
+        //var cell = tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier) as OrderTableViewCell
+        var cell = OrderTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: self.cellIdentifier)
+        cell.setInfo(self.items[indexPath.row])
         
         return cell
     }
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        println("You selected cell #\(indexPath.row)!")
+        //println("You selected cell #\(indexPath.row)!")
     }
     //------------------------------
 
     
     func loadOrders() {
+        println("Reload orders")
         errorLabel.text = nil
         self.activityIndicatorView.startAnimating();
         
@@ -166,11 +157,23 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         request.sortDescriptors = [sortDescriptor]
         
         let results = context.executeFetchRequest(request, error: nil)
+        items.removeAll(keepCapacity: true)
         items = results as [NSObject]
         
+        if (items.count > 0) {
+            var target = items[0]
+            println(detailView.description)
+            detailView.backgroundColor = UIColor(red: 0.2, green: 0, blue: 0.2, alpha: 1)
+            detailView.setInfo(target)
+        }
+        
         self.tableView.reloadData()
+        self.updateViewConstraints()
     }
     
+    /*override func update(currentTime: NSTimeInterval){
+        
+    }*/
     /*
     // MARK: - Navigation
 

@@ -19,6 +19,7 @@
 		BF86321419DD590D00040F86 /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86321319DD590D00040F86 /* TitleViewController.swift */; };
 		BF86321619DD7F6300040F86 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86321519DD7F6300040F86 /* MenuViewController.swift */; };
 		BFD5874C19DEE1D500CA5F5B /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5874B19DEE1D500CA5F5B /* OrderTableViewCell.swift */; };
+		BFEA83B619E2EBB000F5AE79 /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEA83B519E2EBB000F5AE79 /* OrderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		BF86321319DD590D00040F86 /* TitleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleViewController.swift; sourceTree = "<group>"; };
 		BF86321519DD7F6300040F86 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		BFD5874B19DEE1D500CA5F5B /* OrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
+		BFEA83B519E2EBB000F5AE79 /* OrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				BF86321319DD590D00040F86 /* TitleViewController.swift */,
 				BF86321519DD7F6300040F86 /* MenuViewController.swift */,
 				BFD5874B19DEE1D500CA5F5B /* OrderTableViewCell.swift */,
+				BFEA83B519E2EBB000F5AE79 /* OrderView.swift */,
 			);
 			path = ioPOS;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				BF86321419DD590D00040F86 /* TitleViewController.swift in Sources */,
 				BF78FF5B19DC590200E60ED0 /* ioPOS.xcdatamodeld in Sources */,
 				BF3D35CA19DD48220017FD2B /* RestClientProtocol.swift in Sources */,
+				BFEA83B619E2EBB000F5AE79 /* OrderView.swift in Sources */,
 				BF3D35CC19DD48490017FD2B /* RestClient.swift in Sources */,
 				BF78FF5819DC590200E60ED0 /* AppDelegate.swift in Sources */,
 			);
