@@ -10,21 +10,24 @@ import UIKit
 import CoreData
 
 class TitleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, RestClientProtocol {
-
+    
+    @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var detailView: OrderView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     let cellIdentifier = "OrderCell"
     var timer = NSTimer()
     var items: [NSObject] = [NSObject]()
+    var chosen = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.activityIndicatorView.startAnimating()
         self.activityIndicatorView.hidesWhenStopped = true;
+        
+        detailView.backgroundColor = self.view.backgroundColor
         
         // Praise our lord David DelMonte
         self.tableView.delegate = self
@@ -36,7 +39,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.tableView.registerClass(OrderTableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
         //var cellNib = UINib(nibName:"OrderTableViewCell", bundle: nil)
         //self.tableView.registerNib(cellNib, forCellReuseIdentifier: self.cellIdentifier)
-        self.tableView.rowHeight = 100
+        self.tableView.rowHeight = 160
         
         loadOrders()
         let aSelector: Selector = "loadOrders"
@@ -61,12 +64,15 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         return cell
     }
+    
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        //println("You selected cell #\(indexPath.row)!")
+        chosen = indexPath.row
+        setDetailInfo(items[chosen])
     }
     //------------------------------
 
     
+    // MARK: - Webservice
     func loadOrders() {
         println("Reload orders")
         errorLabel.text = nil
@@ -95,11 +101,12 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             // Parse client
             let client = order["client"] as NSDictionary
+            let identity = client["identity"] as NSDictionary
             var newClient = NSEntityDescription.insertNewObjectForEntityForName("Client", inManagedObjectContext: context) as NSManagedObject
             newClient.setValue(client["id"] as Int, forKey: "id")
             newClient.setValue(client["username"], forKey: "username")
-            newClient.setValue(client["firstname"], forKey: "firstname")
-            newClient.setValue(client["lastname"], forKey: "lastname")
+            newClient.setValue(identity["firstname"], forKey: "firstname")
+            newClient.setValue(identity["lastname"], forKey: "lastname")
             newClient.setValue(newCart, forKey: "order")
             
             newCart.setValue(newClient, forKey: "client")
@@ -145,7 +152,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func didFailWithError(error: NSError!) {
         self.activityIndicatorView.stopAnimating();
-        errorLabel.text = "Une erreur s'est produite"
+        errorLabel.text = "Pas de réseau"
     }
     
     func reloadTableView(){
@@ -160,28 +167,145 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         items.removeAll(keepCapacity: true)
         items = results as [NSObject]
         
-        if (items.count > 0) {
-            var target = items[0]
-            println(detailView.description)
-            detailView.backgroundColor = UIColor(red: 0.2, green: 0, blue: 0.2, alpha: 1)
-            detailView.setInfo(target)
-        }
-        
         self.tableView.reloadData()
         self.updateViewConstraints()
     }
     
-    /*override func update(currentTime: NSTimeInterval){
-        
-    }*/
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func validate(){
+        println("validate :")
+        println(items[chosen].description)
+        //ADD WEBSERVICE
     }
-    */
+    
+    func discard(){
+        println("discard :")
+        println(items[chosen].description)
+        //ADD WEBSERVICE
+    }
+    //------------------------------
+    
+    
+    // MARK: - Detailed view
+    func setDetailInfo(o: NSObject) {
+        detailView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+        for (var subview) in detailView.subviews
+        {
+            subview.removeFromSuperview()
+        }
+        let bgc = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05)
+        let gray = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        
+        let wdth = detailView.frame.size.width
+        let hPad: CGFloat = 10 //Horizontal padding
+        var y: CGFloat = 5
+        
+        var name: String = ""
+        if (o.valueForKey("client") != nil) {
+            if o.valueForKey("client").valueForKey("firstname") != nil {
+                name += o.valueForKey("client").valueForKey("firstname").description + " "
+            }
+            if o.valueForKey("client").valueForKey("lastname") != nil {
+                name += o.valueForKey("client").valueForKey("lastname").description
+            }
+        }
+        var nameLbl = UILabel(frame: CGRectMake(120/*TODO*/, y, 300, 42))
+        nameLbl.text = name;
+        nameLbl.textAlignment = NSTextAlignment.Left
+        nameLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 30)
+        detailView.addSubview(nameLbl)
+        y += nameLbl.frame.height
+        
+        var id: String = "N°"
+        id += o.valueForKey("id").description + "\n"
+        id += "Commande ONLINE\n"
+        var nstime : NSString = o.valueForKey("delivery").description
+        id += (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
+        
+        var idLbl = UILabel(frame: CGRectMake(120/*TODO*/, y, 300, 63))
+        idLbl.text = id;
+        idLbl.textColor = gray
+        idLbl.textAlignment = NSTextAlignment.Left
+        idLbl.numberOfLines = 3
+        detailView.addSubview(idLbl)
+        y += idLbl.frame.height
+        
+        y += 5
+        var sep1 = UILabel(frame: CGRectMake(hPad, y, wdth - hPad * 2, 1))
+        sep1.backgroundColor = gray
+        detailView.addSubview(sep1)
+        y += 6
+        
+        var productList = UIScrollView(frame: CGRectMake(hPad, y, wdth - hPad * 2, 450))
+        var subY: CGFloat = 0
+        var products: NSMutableSet = o.valueForKey("products") as NSMutableSet
+        for p in products {
+            var pr: NSObject = p as NSObject
+            var subNameLbl = UILabel(frame: CGRectMake(hPad, subY, wdth - hPad*4 - 80, 21))
+            subNameLbl.text = "1 " + pr.valueForKey("name").description
+            subNameLbl.textAlignment = NSTextAlignment.Left
+            var subPriceLbl = UILabel(frame: CGRectMake(wdth - 80 - hPad*3, subY, 80, 21))
+            subPriceLbl.text = (pr.valueForKey("price") as Float).description + "0€"
+            subPriceLbl.textAlignment = NSTextAlignment.Right
+            productList.addSubview(subNameLbl)
+            productList.addSubview(subPriceLbl)
+            subY += subNameLbl.frame.height
+            
+            if pr.valueForKey("extra") != nil {
+                var extraLbl = UILabel(frame: CGRectMake(hPad*3, subY, wdth-hPad*6, 10))
+                extraLbl.text = pr.valueForKey("extra").description
+                extraLbl.textAlignment = NSTextAlignment.Left
+                extraLbl.font = UIFont(name: "HelveticaNeue", size: 11)
+                productList.addSubview(extraLbl)
+                subY += extraLbl.frame.height
+            }
+            
+            subY += 5
+        }
+        var size: CGSize = productList.frame.size
+        size.height = subY
+        productList.contentSize = size
+        detailView.addSubview(productList)
+        y += productList.frame.size.height
+        
+        y += 5
+        var sep2 = UILabel(frame: CGRectMake(hPad, y, wdth - hPad*2, 1))
+        sep2.backgroundColor = gray
+        detailView.addSubview(sep2)
+        y += 6
+        
+        var totalTTC = UILabel(frame: CGRectMake(hPad, y + 14, wdth - 150 - hPad*2, 16))
+        totalTTC.text = "Total";
+        totalTTC.textAlignment = NSTextAlignment.Right
+        totalTTC.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        detailView.addSubview(totalTTC)
+        
+        var price: String = (o.valueForKey("total") as Float).description
+        price += "0€"
+        var priceLbl = UILabel(frame: CGRectMake(wdth - 150 - hPad, y, 150, 30))
+        priceLbl.text = price;
+        priceLbl.textAlignment = NSTextAlignment.Right
+        priceLbl.font = UIFont(name: "HelveticaNeue", size: 30)
+        detailView.addSubview(priceLbl)
+        y += priceLbl.frame.size.height + 4
+        
+        //------------BUTTONS
+        let txtWhite = UIColor(white: 1, alpha: 0.8)
+        y += hPad
+        var discardB = UIButton(frame: CGRectMake(hPad, y, 80, 50))
+        discardB.backgroundColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+        discardB.setTitle("x", forState: UIControlState.Normal)
+        discardB.setTitleColor(txtWhite, forState: UIControlState.Normal)
+        discardB.addTarget(self, action: "discard", forControlEvents: UIControlEvents.TouchDown)
+        detailView.addSubview(discardB)
+        
+        var validateB = UIButton(frame: CGRectMake(80 + 2*hPad, y, detailView.frame.size.width - 80 - 3*hPad, 50))
+        validateB.backgroundColor = UIColor(red: 0, green: 0.7, blue: 0.2, alpha: 1)
+        validateB.setTitle("V", forState: UIControlState.Normal)
+        validateB.setTitleColor(txtWhite, forState: UIControlState.Normal)
+        validateB.addTarget(self, action: "validate", forControlEvents: UIControlEvents.TouchDown)
+        detailView.addSubview(validateB)
+        y += hPad + validateB.frame.size.height
+        //-------------------
+    }
 
 }

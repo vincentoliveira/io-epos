@@ -10,8 +10,6 @@ import UIKit
 
 class OrderView: UIView {
 
-    let txtColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -20,8 +18,4 @@ class OrderView: UIView {
         // Drawing code
     }
     */
-    
-    func setInfo(o: NSObject) {
-        backgroundColor = txtColor
-    }
 }

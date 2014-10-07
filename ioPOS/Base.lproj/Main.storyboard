@@ -32,7 +32,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Identifiant du manager" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZLn-hG-eA1">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Identifiant" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZLn-hG-eA1">
                                 <rect key="frame" x="368" y="293" width="289" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -55,11 +55,10 @@
                                 <color key="color" white="0.49952746980000001" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" white="0.19842208059210525" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.091231496710526314" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="InnovOrder" id="GtQ-2h-DGQ"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
@@ -96,11 +95,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="top" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Yrq-8N-NrU">
-                                <rect key="frame" x="51" y="49" width="477" height="711"/>
+                                <rect key="frame" x="51" y="49" width="477" height="719"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="OrderCell" id="EIn-Aq-aYx" customClass="OrderTableViewCell" customModule="ioPOS" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="OrderCell" id="EIn-Aq-aYx" customClass="OrderTableViewCell" customModule="ioPOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="671" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EIn-Aq-aYx" id="04d-qD-C8B">
@@ -126,19 +125,18 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="orH-J5-whv">
                                 <rect key="frame" x="16" y="20" width="20" height="20"/>
                             </activityIndicatorView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Usk-rD-nBp">
+                                <rect key="frame" x="548" y="58" width="476" height="690"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hdX-EO-ZWf">
                                 <rect key="frame" x="44" y="19" width="297" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bco-TB-ynN">
-                                <rect key="frame" x="563" y="49" width="445" height="699"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.19747121710526316" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.14999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="88t-mc-lyd"/>
                     <value key="contentSizeForViewInPopover" type="size" width="700" height="768"/>
@@ -147,7 +145,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="orH-J5-whv" id="gwS-Qe-FuZ"/>
-                        <outlet property="detailView" destination="Bco-TB-ynN" id="z7d-0A-dtr"/>
+                        <outlet property="detailView" destination="Usk-rD-nBp" id="G1D-tF-BF5"/>
                         <outlet property="errorLabel" destination="hdX-EO-ZWf" id="vPv-je-DA1"/>
                         <outlet property="tableView" destination="Yrq-8N-NrU" id="GCp-h0-OWg"/>
                     </connections>
@@ -223,6 +221,7 @@
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T4x-ed-4Jk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -244,7 +243,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="tck-1r-4hj"/>
+        <segue reference="3Ew-Ik-f36"/>
         <segue reference="ouK-Bq-BMq"/>
     </inferredMetricsTieBreakers>
 </document>
