@@ -5,6 +5,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="total" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="total_tva" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="total_unpayed" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <relationship name="client" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="order" inverseEntity="Client" syncable="YES"/>
         <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="cart" inverseEntity="Product" syncable="YES"/>
@@ -20,9 +21,10 @@
         <attribute name="extra" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="short_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="vat" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="tva" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="products" inverseEntity="Cart" syncable="YES"/>
     </entity>
     <entity name="RestaurantToken" syncable="YES">
@@ -31,9 +33,9 @@
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Cart" positionX="-63" positionY="225" width="128" height="150"/>
+        <element name="Cart" positionX="-63" positionY="225" width="128" height="165"/>
         <element name="Client" positionX="63" positionY="135" width="128" height="118"/>
-        <element name="Product" positionX="196" positionY="83" width="128" height="148"/>
+        <element name="Product" positionX="196" positionY="83" width="128" height="163"/>
         <element name="RestaurantToken" positionX="-63" positionY="-18" width="128" height="90"/>
     </elements>
 </model>

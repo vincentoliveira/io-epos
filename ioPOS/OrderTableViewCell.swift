@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrderTableViewCell: UITableViewCell {
+class OrderTableViewCell: UITableViewCell, RestClientProtocol {
 
     let txtColor = UIColor(white: 1, alpha: 0.8)
     let darkGray = UIColor(red: 0.3, green: 0.32, blue: 0.32, alpha: 1)
@@ -16,6 +16,9 @@ class OrderTableViewCell: UITableViewCell {
     let darkDarkGray = UIColor(white: 0.15, alpha: 1)
     
     var source: NSObject?
+    var restaurant: String = "none"
+    var status: String = "default"
+    var parent: TitleViewController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,24 +47,77 @@ class OrderTableViewCell: UITableViewCell {
     func initialize(){
         backgroundColor = darkGray
         selectionStyle = UITableViewCellSelectionStyle.None
-        frame.size.height = 160
-        frame.size.width = 477
+        frame.size.height = 140
+        frame.size.width = 442
     }
     
+    //----------WEBSERVICE
     func validate(){
-        println("validate :")
-        println(source?.description)
-        //ADD WEBSERVICE
+        if (source != nil) && status == "default" {
+            status = "next"
+            println("next status")
+            let restClient = RestClient()
+            restClient.delegate = self;
+            restClient.nextStatus(restaurant, cartId: source!.valueForKey("id").description);
+        }
     }
     
     func discard(){
-        println("discard :")
-        println(source?.description)
-        //ADD WEBSERVICE
+        if (source != nil) && status == "default" {
+            status = "cancel"
+            println("cancel")
+            let restClient = RestClient()
+            restClient.delegate = self;
+            restClient.cancel(restaurant, cartId: source!.valueForKey("id").description);
+        }
+    }
+    
+    func didRecieveResponse(results: NSDictionary) {
+        parent!.loadOrders()
+        status = "default"
+    }
+    
+    func didFailWithError(error: NSError!) {
+        status = "default"
+    }
+    //--------------------
+    
+    func newLabel(frame: CGRect, text: String, align: NSTextAlignment) -> UILabel {
+        var lbl = UILabel(frame: frame)
+        lbl.text = text
+        lbl.textColor = txtColor
+        lbl.textAlignment = align
+        return lbl
+    }
+    
+    func addUnpayed(){
+        var payeStmp = UILabel(frame: CGRectMake(204, 99, frame.size.width - 304, 20))
+        payeStmp.backgroundColor = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
+        contentView.addSubview(payeStmp)
+        
+        var payeLbl = newLabel(CGRectMake(229, 99, frame.size.width - 304-25, 20),
+            text: "NON PAYEE", align: NSTextAlignment.Center)
+        payeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
+        contentView.addSubview(payeLbl)
+        
+        var img = UIImageView(frame: CGRectMake(205, 100, 23, 18))
+        img.image = UIImage(named: "Icone_No-pay.png")
+        contentView.addSubview(img)
+    }
+    
+    func addSeparator(frame: CGRect){
+        var separator = UILabel(frame: frame)
+        separator.backgroundColor = darkDarkGray
+        contentView.addSubview(separator)
     }
     
     func setInfo(o: NSObject) {
         source = o
+        
+        addSeparator(CGRectMake(0, 0, frame.size.width, 15))
+        addSeparator(CGRectMake(0, frame.size.height-45, frame.size.width, 45))
+        addSeparator(CGRectMake(0, 0, 100, frame.size.height))
+        addSeparator(CGRectMake(frame.size.width - 100, 0, 100, frame.size.height))
         
         var name: String = ""
         if (o.valueForKey("client") != nil) {
@@ -72,87 +128,64 @@ class OrderTableViewCell: UITableViewCell {
                 name += o.valueForKey("client").valueForKey("lastname").description
             }
         }
-        var nameLbl = UILabel(frame: CGRectMake(104, 4, 300, 16))
-        nameLbl.text = name;
-        nameLbl.textColor = txtColor
-        nameLbl.textAlignment = NSTextAlignment.Left
+        var nameLbl = newLabel(CGRectMake(104, 19, 300, 16),
+            text: name, align: NSTextAlignment.Left)
         nameLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         nameLbl.sizeToFit()
         contentView.addSubview(nameLbl)
         
         var id: String = "n°"
         id += o.valueForKey("id").description
-        var idLbl = UILabel(frame: CGRectMake(108 + nameLbl.frame.width, 8, 100, 12))
-        idLbl.text = id;
-        idLbl.textColor = txtColor
-        idLbl.textAlignment = NSTextAlignment.Left
+        var idLbl = newLabel(CGRectMake(108 + nameLbl.frame.width, 23, 100, 12),
+            text: id, align: NSTextAlignment.Left)
         idLbl.font = UIFont(name: "HelveticaNeue", size: 12)
         contentView.addSubview(idLbl)
         
-        var typeLbl = UILabel(frame: CGRectMake(104, 8 + nameLbl.frame.height, 50, 20))
-        typeLbl.text = "Commande ONLINE";
-        typeLbl.textColor = txtColor
-        typeLbl.textAlignment = NSTextAlignment.Left
+        var typeLbl = newLabel(CGRectMake(104, 23 + nameLbl.frame.height, 50, 20),
+            text: "Commande ONLINE", align: NSTextAlignment.Left)
         typeLbl.font = UIFont(name: "HelveticaNeue", size: 12)
         typeLbl.sizeToFit()
         contentView.addSubview(typeLbl)
         
         //TMP
-        var statusLbl = UILabel(frame: CGRectMake(104, 32 + nameLbl.frame.height, 50, 20))
+        /*var statusLbl = UILabel(frame: CGRectMake(104, 32 + nameLbl.frame.height, 50, 20))
         statusLbl.text = o.valueForKey("status").description;
         statusLbl.textColor = txtColor
         statusLbl.textAlignment = NSTextAlignment.Left
         statusLbl.font = UIFont(name: "HelveticaNeue", size: 12)
         statusLbl.sizeToFit()
-        contentView.addSubview(statusLbl)
+        contentView.addSubview(statusLbl)*/
         //
         
-        //--------SEPARATORS
-        var separator1 = UILabel(frame: CGRectMake(0, frame.size.height-60, frame.size.width, 60))
-        separator1.backgroundColor = darkDarkGray
-        contentView.addSubview(separator1)
-        var separator2 = UILabel(frame: CGRectMake(0, 0, 100, frame.size.height))
-        separator2.backgroundColor = darkDarkGray
-        contentView.addSubview(separator2)
-        var separator3 = UILabel(frame: CGRectMake(frame.size.width - 100, 0, 100, frame.size.height))
-        separator3.backgroundColor = darkDarkGray
-        contentView.addSubview(separator3)
-        //------------------
-        
         //--------------TIME
-        var timeStmp = UILabel(frame: CGRectMake(100, 104, 160, 20))
+        var timeStmp = UILabel(frame: CGRectMake(100, 99, 100, 20))
         timeStmp.backgroundColor = UIColor(white: 0.25, alpha: 1)
         contentView.addSubview(timeStmp)
+        
         var nstime : NSString = o.valueForKey("delivery").description
         var time: String = (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
-        var timeLbl = UILabel(frame: CGRectMake(100, 104, 160, 20))
-        timeLbl.text = time;
-        timeLbl.textColor = txtColor
-        timeLbl.textAlignment = NSTextAlignment.Center
+        var timeLbl = newLabel(CGRectMake(100, 99, 100, 20), text: time, align: NSTextAlignment.Center)
         timeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
         contentView.addSubview(timeLbl)
         //------------------
         
-        var price: String = (o.valueForKey("total") as Float).description
-        price += "0€"
-        var priceLbl = UILabel(frame: CGRectMake(frame.width - 254, 100-34, 150, 30))
-        priceLbl.text = price;
-        priceLbl.textColor = txtColor
-        priceLbl.textAlignment = NSTextAlignment.Right
-        priceLbl.font = UIFont(name: "HelveticaNeue", size: 30)
+        var price: String = NSString(format: "%.02f", locale: nil, o.valueForKey("total") as Float) + "€"
+        var priceLbl = newLabel(CGRectMake(frame.width - 254, 95-44, 150, 40),
+            text: price, align: NSTextAlignment.Right)
+        priceLbl.font = UIFont(name: "HelveticaNeue-Thin", size: 40)
         contentView.addSubview(priceLbl)
         
         //----STATUS-BUTTONS
         let status = o.valueForKey("status").description
         if status == "INIT" {
-            var validateB = UIButton(frame: CGRectMake(frame.size.width - 96, 0, 84, 100))
+            var validateB = UIButton(frame: CGRectMake(frame.size.width - 96, 15, 84, 80))
             validateB.backgroundColor = UIColor(red: 0, green: 0.7, blue: 0.2, alpha: 1)
             validateB.setTitle("V", forState: UIControlState.Normal)
             validateB.setTitleColor(txtColor, forState: UIControlState.Normal)
             validateB.addTarget(self, action: "validate", forControlEvents: UIControlEvents.TouchDown)
             contentView.addSubview(validateB)
             
-            var discardB = UIButton(frame: CGRectMake(frame.size.width - 96, 104, 84, 20))
+            var discardB = UIButton(frame: CGRectMake(frame.size.width - 96, 99, 84, 20))
             discardB.backgroundColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
             discardB.setTitle("x", forState: UIControlState.Normal)
             discardB.setTitleColor(txtColor, forState: UIControlState.Normal)
@@ -161,18 +194,28 @@ class OrderTableViewCell: UITableViewCell {
         }
         //------------------
         
-        //----------NON-PAYE
         if o.valueForKey("total_unpayed") as Float > 0 {
-            var payeStmp = UILabel(frame: CGRectMake(264, 104, frame.size.width - 364, 20))
-            payeStmp.backgroundColor = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
-            contentView.addSubview(payeStmp)
-            var payeLbl = UILabel(frame: CGRectMake(264, 104, frame.size.width - 364, 20))
-            payeLbl.text = "NON PAYEE";
-            payeLbl.textColor = txtColor
-            payeLbl.textAlignment = NSTextAlignment.Center
-            payeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
-            contentView.addSubview(payeLbl)
+            addUnpayed()
         }
+        
+        //-------------IMAGE
+        var circle = UIImageView(frame: CGRectMake(0, 15, 81, 81))
+        var small = UIImageView(frame: CGRectMake(65, 0, 30, 30))
+        var center = UIImageView(frame: CGRectMake(27, 15 + 17, 27, 45))
+        center.image = UIImage(named: "Icone_Bag.png")
+        if status == "INIT" {
+            circle.image = UIImage(named: "Icone_Ellipse.png")
+            small.image = UIImage(named: "Icone_Add.png")
+        } else if status == "IN_PROGRESS" {
+            circle.image = UIImage(named: "Icone_Ellipse-Blue.png")
+            small.image = UIImage(named: "Icone_InProgress.png")
+        } else {
+            circle.image = UIImage(named: "Icone_Ellipse.png")
+            small.image = UIImage(named: "Icone_Done.png")
+        }
+        contentView.addSubview(circle)
+        contentView.addSubview(small)
+        contentView.addSubview(center)
         //------------------
     }
 }
