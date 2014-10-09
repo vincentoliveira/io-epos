@@ -14,12 +14,15 @@ class OrderView: UIView, RestClientProtocol {
     let gray = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
     
     var y: CGFloat = 5
+    var subY: CGFloat = 0
     
     var source: NSObject?
     var restaurant: String = "none"
     var status: String = "default"
     var parent: TitleViewController?
     
+    
+    // MARK: - Buttons functions
     func validate(){
         if (source != nil) && status == "default" {
             status = "next"
@@ -31,6 +34,7 @@ class OrderView: UIView, RestClientProtocol {
     }
     
     func discard(){
+        //parent!.performSegueWithIdentifier("discard", sender: parent)
         if (source != nil) && status == "default" {
             status = "cancel"
             println("cancel")
@@ -40,6 +44,8 @@ class OrderView: UIView, RestClientProtocol {
         }
     }
     
+    
+    // MARK: - Webservice functions
     func didRecieveResponse(results: NSDictionary) {
         parent!.loadOrders()
         status = "default"
@@ -50,6 +56,8 @@ class OrderView: UIView, RestClientProtocol {
         println("Failed to update cart")
     }
     
+    
+    // MARK: - Tools
     func newLabel(frame: CGRect, text: String, align: NSTextAlignment) -> UILabel {
         var lbl = UILabel(frame: frame)
         lbl.text = text
@@ -57,6 +65,26 @@ class OrderView: UIView, RestClientProtocol {
         return lbl
     }
     
+    func newButton(frame: CGRect, color: UIColor, title: String) -> UIButton {
+        var button = UIButton(frame: frame)
+        button.backgroundColor = color
+        // TMP {
+        button.setTitle(title, forState: UIControlState.Normal)
+        button.setTitleColor(UIColor(white: 1, alpha: 1), forState: UIControlState.Normal)
+        // }
+        return button
+    }
+    
+    func addSeparator(){
+        y += 5
+        var sep = UILabel(frame: CGRectMake(10, y, frame.size.width - 20, 1))
+        sep.backgroundColor = gray
+        addSubview(sep)
+        y += 6
+    }
+    
+    
+    // MARK: - Content functions
     func setUserName(){
         var name: String = ""
         if (source!.valueForKey("client") != nil) {
@@ -87,38 +115,67 @@ class OrderView: UIView, RestClientProtocol {
         y += idLbl.frame.height
     }
     
-    func setProducts(){
-        let wdth = frame.size.width
+    func setCircle(){
+        let status = source!.valueForKey("status").description
         
-        var productList = UIScrollView(frame: CGRectMake(10, y, wdth - 20, 381))
-        var subY: CGFloat = 0
-        var products: NSMutableSet = source!.valueForKey("products") as NSMutableSet
+        var circle = UIImageView(frame: CGRectMake(10, 20, 81, 81))
+        if status == "INIT" {
+            circle.image = UIImage(named: "Icone_Ellipse.png")
+        } else if status == "IN_PROGRESS" {
+            circle.image = UIImage(named: "Icone_Ellipse-Blue.png")
+        } else {
+            circle.image = UIImage(named: "Icone_Ellipse.png")
+        }
+        addSubview(circle)
+    }
+    func setLogo(){
+        let status = source!.valueForKey("status").description
+        
+        var logo = UIImageView(frame: CGRectMake(10 + 65, 5, 30, 30))
+        if status == "INIT" {
+            logo.image = UIImage(named: "Icone_Add.png")
+        } else if status == "IN_PROGRESS" {
+            logo.image = UIImage(named: "Icone_InProgress.png")
+        } else {
+            logo.image = UIImage(named: "Icone_Done.png")
+        }
+        addSubview(logo)
+    }
+    func setCenterLogo(){
+        var center = UIImageView(frame: CGRectMake(10 + 27, 20 + 17, 27, 45))
+        center.image = UIImage(named: "Icone_Bag-Black.png")
+        addSubview(center)
+    }
+    
+    func setUnpayed(){
+        y += 5
+        if source!.valueForKey("total_unpayed") as Float > 0 {
+            var payeStmp = UILabel(frame: CGRectMake(10, y, frame.size.width / 2, 30))
+            payeStmp.backgroundColor = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
+            addSubview(payeStmp)
+            
+            var payeLbl = newLabel(CGRectMake(35, y, frame.size.width / 2 - 35, 30),
+                text: "NON PAYEE", align: NSTextAlignment.Center)
+            payeLbl.textColor = backgroundColor!
+            payeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+            addSubview(payeLbl)
+            
+            var img = UIImageView(frame: CGRectMake(21, y + 6, 23, 18))
+            img.image = UIImage(named: "Icone_No-pay.png")
+            addSubview(img)
+        }
+        y += 35
+    }
+    
+    func setProducts(){
+        subY = 0
+
+        var productList = UIScrollView(frame: CGRectMake(10, y, frame.size.width - 20, 371))
+        var nameDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        var notOrderedProducts: NSMutableSet = source!.valueForKey("products") as NSMutableSet
+        var products = notOrderedProducts.sortedArrayUsingDescriptors([nameDescriptor])
         for p in products {
-            var pr: NSObject = p as NSObject
-            var nb = pr.valueForKey("number") as Float
-            var price = pr.valueForKey("price") as Float
-            
-            var subNameLbl = newLabel(CGRectMake(10, subY, wdth - 40 - 80, 21),
-                text: Int(nb).description + " " + pr.valueForKey("name").description,
-                align: NSTextAlignment.Left)
-            productList.addSubview(subNameLbl)
-            
-            var subPriceLbl = newLabel(CGRectMake(wdth - 80 - 30, subY, 80, 21),
-                text: NSString(format: "%.02f", locale: nil, (price * nb)) + "€",
-                align: NSTextAlignment.Right)
-            productList.addSubview(subPriceLbl)
-            
-            subY += subNameLbl.frame.height
-            
-            if pr.valueForKey("extra") != nil {
-                var extraLbl = newLabel(CGRectMake(30, subY, wdth-60, 10),
-                    text: pr.valueForKey("extra").description,
-                    align: NSTextAlignment.Left)
-                extraLbl.font = UIFont(name: "HelveticaNeue", size: 11)
-                productList.addSubview(extraLbl)
-                subY += extraLbl.frame.height
-            }
-            
+            addProduct(p as NSObject, productList: productList)
             subY += 5
         }
         var size: CGSize = productList.frame.size
@@ -128,20 +185,43 @@ class OrderView: UIView, RestClientProtocol {
         y += productList.frame.size.height
     }
     
-    func addSeparator(){
-        y += 5
-        var sep = UILabel(frame: CGRectMake(10, y, frame.size.width - 20, 1))
-        sep.backgroundColor = gray
-        addSubview(sep)
-        y += 6
+    func addProduct(pr: NSObject, productList: UIScrollView){
+        let wdth = frame.size.width
+        var nb = pr.valueForKey("number") as Float
+        var price = pr.valueForKey("price") as Float
+        
+        var subNameLbl = newLabel(CGRectMake(10, subY, wdth - 40 - 80, 21),
+            text: Int(nb).description + " " + pr.valueForKey("name").description,
+            align: NSTextAlignment.Left)
+        productList.addSubview(subNameLbl)
+        
+        var subPriceLbl = newLabel(CGRectMake(wdth - 80 - 30, subY, 80, 21),
+            text: NSString(format: "%.02f", locale: nil, (price * nb)) + "€",
+            align: NSTextAlignment.Right)
+        productList.addSubview(subPriceLbl)
+        
+        subY += subNameLbl.frame.height
+        
+        if pr.valueForKey("extra") != nil {
+            var extraLbl = newLabel(CGRectMake(30, subY, wdth-60, 10),
+                text: pr.valueForKey("extra").description,
+                align: NSTextAlignment.Left)
+            extraLbl.font = UIFont(name: "HelveticaNeue", size: 11)
+            productList.addSubview(extraLbl)
+            subY += extraLbl.frame.height
+        }
     }
     
-    func setTotal(){
-        let wdth = frame.size.width
+    func setPrice(){
         let price: Float = source!.valueForKey("total") as Float
         let tva: Float = source!.valueForKey("total_tva") as Float
         let ht: Float = price - tva
-        
+        setTotal(price)
+        setTVA(tva)
+        setHT(ht)
+    }
+    func setTotal(price: Float){
+        let wdth = frame.size.width
         var totalTTC = newLabel(CGRectMake(10, y + 13, wdth - 150 - 20, 16),
             text: "Total", align: NSTextAlignment.Right)
         totalTTC.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
@@ -153,6 +233,9 @@ class OrderView: UIView, RestClientProtocol {
         addSubview(priceLbl)
         y += priceLbl.frame.size.height + 4
         
+    }
+    func setTVA(tva: Float){
+        let wdth = frame.size.width
         var totalTVA = newLabel(CGRectMake(10, y, wdth - 80 - 20, 12),
             text: "TVA", align: NSTextAlignment.Right)
         totalTVA.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
@@ -163,7 +246,9 @@ class OrderView: UIView, RestClientProtocol {
         tvaLbl.font = UIFont(name: "HelveticaNeue", size: 12)
         addSubview(tvaLbl)
         y += tvaLbl.frame.size.height + 4
-        
+    }
+    func setHT(ht: Float){
+        let wdth = frame.size.width
         var totalHT = newLabel(CGRectMake(10, y, wdth - 80 - 20, 12),
             text: "Total HT", align: NSTextAlignment.Right)
         totalHT.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
@@ -179,67 +264,24 @@ class OrderView: UIView, RestClientProtocol {
     func setButtons(){
         let txtWhite = UIColor(white: 1, alpha: 0.8)
         y += 10
-        var discardB = UIButton(frame: CGRectMake(10, y, 80, 50))
-        discardB.backgroundColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
-        discardB.setTitle("x", forState: UIControlState.Normal)
-        discardB.setTitleColor(txtWhite, forState: UIControlState.Normal)
+        var discardB = newButton(CGRectMake(10, y, 80, 50),
+            color: UIColor(red: 0.8, green: 0, blue: 0, alpha: 1), title: "Annuler")
         discardB.addTarget(self, action: "discard", forControlEvents: UIControlEvents.TouchDown)
         addSubview(discardB)
         
-        var validateB = UIButton(frame: CGRectMake(80 + 20, y, frame.size.width - 80 - 30, 50))
-        validateB.backgroundColor = UIColor(red: 0, green: 0.7, blue: 0.2, alpha: 1)
-        validateB.setTitle("V", forState: UIControlState.Normal)
-        validateB.setTitleColor(txtWhite, forState: UIControlState.Normal)
+        var validateB = newButton(CGRectMake(80 + 20, y, frame.size.width - 80 - 30, 50),
+            color: UIColor(red: 0.1, green: 0.7, blue: 0.3, alpha: 1), title: "Etape suivante")
         validateB.addTarget(self, action: "validate", forControlEvents: UIControlEvents.TouchDown)
         addSubview(validateB)
         y += 10 + validateB.frame.size.height
     }
     
-    func setImage(){
-        let status = source!.valueForKey("status").description
-        
-        var circle = UIImageView(frame: CGRectMake(10, 20, 81, 81))
-        var small = UIImageView(frame: CGRectMake(10 + 65, 5, 30, 30))
-        var center = UIImageView(frame: CGRectMake(10 + 27, 20 + 17, 27, 45))
-        center.image = UIImage(named: "Icone_Bag.png")
-        if status == "INIT" {
-            circle.image = UIImage(named: "Icone_Ellipse.png")
-            small.image = UIImage(named: "Icone_Add.png")
-        } else if status == "IN_PROGRESS" {
-            circle.image = UIImage(named: "Icone_Ellipse-Blue.png")
-            small.image = UIImage(named: "Icone_InProgress.png")
-        } else {
-            circle.image = UIImage(named: "Icone_Ellipse.png")
-            small.image = UIImage(named: "Icone_Done.png")
-        }
-        addSubview(circle)
-        addSubview(small)
-        addSubview(center)
-    }
-    
-    func setUnpayed(){
-        y += 5
-        if source!.valueForKey("total_unpayed") as Float > 0 {
-            var payeStmp = UILabel(frame: CGRectMake(10, y, frame.size.width - 364, 20))
-            payeStmp.backgroundColor = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
-            addSubview(payeStmp)
-            
-            var payeLbl = newLabel(CGRectMake(35, y, frame.size.width - 364-25, 20),
-                text: "NON PAYEE", align: NSTextAlignment.Center)
-            payeLbl.textColor = backgroundColor!
-            payeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
-            addSubview(payeLbl)
-            
-            var img = UIImageView(frame: CGRectMake(11, y + 1, 23, 18))
-            img.image = UIImage(named: "Icone_No-pay.png")
-            addSubview(img)
-        }
-        y += 25
-    }
-    
     func setDetailInfo() {
         y = 5
-        let wdth = frame.size.width
+        
+        setCircle()
+        setLogo()
+        setCenterLogo()
         
         setUserName()
         setDetails()
@@ -247,8 +289,7 @@ class OrderView: UIView, RestClientProtocol {
         addSeparator()
         setProducts()
         addSeparator()
-        setTotal()
+        setPrice()
         setButtons()
-        setImage()
     }
 }

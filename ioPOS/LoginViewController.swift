@@ -19,17 +19,19 @@ class LoginViewController: UIViewController, RestClientProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var appDeleguage : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
-        var context : NSManagedObjectContext = appDeleguage.managedObjectContext!
+        var appDelegate : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
+        var context : NSManagedObjectContext = appDelegate.managedObjectContext!
         
         var request = NSFetchRequest(entityName: "RestaurantToken")
         request.returnsObjectsAsFaults = false
         
         var results:NSArray = context.executeFetchRequest(request, error: nil)!
         
+        appDelegate.setRestaurant(nil)
         if results.count > 0 {
             let restaurantToken:NSManagedObject = results[0] as NSManagedObject
             loginTextField.text = restaurantToken.valueForKey("email") as? String
+            appDelegate.setRestaurant(restaurantToken.valueForKey("token") as? String)
             
             redirectToPOS()
         }
