@@ -247,6 +247,8 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     func parseOrderInfo(order: AnyObject, newCart: NSManagedObject) -> NSManagedObject {
         let delivery = order["delivery_date"] as NSDictionary
         let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone(name: "Arctic/Longyearbyen")
+        //println(NSTimeZone.knownTimeZoneNames().description)
         dateFormatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss"
         let date = dateFormatter.dateFromString(delivery["date"] as String)
         println("\(date?.description) =?= \(delivery.description)")
