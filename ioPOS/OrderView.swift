@@ -157,7 +157,7 @@ class OrderView: UIView, RestClientProtocol {
             var payeLbl = newLabel(CGRectMake(35, y, frame.size.width / 2 - 35, 30),
                 text: "NON PAYEE", align: NSTextAlignment.Center)
             payeLbl.textColor = backgroundColor!
-            payeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+            payeLbl.font = UIFont(name: "HelveticaNeue", size: 18)
             addSubview(payeLbl)
             
             var img = UIImageView(frame: CGRectMake(21, y + 6, 23, 18))
