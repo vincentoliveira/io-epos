@@ -11,6 +11,7 @@ import CoreData
 
 class TitleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, RestClientProtocol {
     
+    @IBOutlet weak var filterBar: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var menuBar: UIView!
     @IBOutlet weak var detailView: OrderView!
@@ -25,6 +26,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     var chosen: Int = -1
     var chosen_id = ""
     var restaurant = ""
+    var filter = "All"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         view.backgroundColor = UIColor(red: 0.14, green: 0.16, blue: 0.17, alpha: 1)
         setRestaurant()
         initOutlets()
+        setFilters()
         
         reloadTableView()
         loadOrders()
@@ -75,9 +78,27 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         menuBar.layer.shadowColor = UIColor.blackColor().CGColor
         menuBar.layer.shadowOpacity = 1
         menuBar.layer.shadowRadius = 10
-        /*detailView.layer.shadowColor = UIColor.blackColor().CGColor
-        detailView.layer.shadowOpacity = 0.5
-        detailView.layer.shadowRadius = 5*/
+        filterBar.layer.shadowColor = UIColor.blackColor().CGColor
+        filterBar.layer.shadowOpacity = 0.5
+        filterBar.layer.shadowRadius = 5
+    }
+    
+    func setFilters(){
+        addFilter("All", index: 0)
+        addFilter("Add", index: 1)
+        addFilter("InProgress", index: 2)
+        addFilter("No-pay", index: 3)
+        addFilter("Done", index: 4)
+        addFilter("History", index: 5)
+    }
+    
+    func addFilter(title: String, index: CGFloat) {
+        let h = filterBar.frame.height / 6
+        var filter: FilterButton = FilterButton(frame: CGRectMake(0, h * index, filterBar.frame.width, h))
+        filter.parent = self
+        filter.initialize(title)
+        println(filter.description)
+        filterBar.addSubview(filter)
     }
     
     
@@ -247,11 +268,9 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     func parseOrderInfo(order: AnyObject, newCart: NSManagedObject) -> NSManagedObject {
         let delivery = order["delivery_date"] as NSDictionary
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "Arctic/Longyearbyen")
-        //println(NSTimeZone.knownTimeZoneNames().description)
+        dateFormatter.timeZone = NSTimeZone(name: "GMT")
         dateFormatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss"
         let date = dateFormatter.dateFromString(delivery["date"] as String)
-        println("\(date?.description) =?= \(delivery.description)")
         newCart.setValue(date, forKey: "delivery")
         
         newCart.setValue(order["id"] as Int, forKey: "id")
@@ -327,5 +346,13 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         detailView.source = o
         detailView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         detailView.setDetailInfo()
+    }
+    
+    
+    // MARK: - Filterbuttons
+    func untoggleAll() {
+        for b : FilterButton in filterBar.subviews as [FilterButton] {
+            b.untoggle()
+        }
     }
 }

@@ -161,6 +161,7 @@
                         <outlet property="activityIndicatorView" destination="orH-J5-whv" id="gwS-Qe-FuZ"/>
                         <outlet property="detailView" destination="Usk-rD-nBp" id="G1D-tF-BF5"/>
                         <outlet property="errorLabel" destination="hdX-EO-ZWf" id="vPv-je-DA1"/>
+                        <outlet property="filterBar" destination="byU-QV-WFp" id="pbp-Qz-cH1"/>
                         <outlet property="menuBar" destination="Z00-2O-2pu" id="qUq-dT-QUa"/>
                         <outlet property="searchBar" destination="aBa-mc-Gmk" id="cJB-Yy-gKw"/>
                         <outlet property="tableView" destination="Yrq-8N-NrU" id="GCp-h0-OWg"/>

@@ -131,7 +131,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         if status == "INIT" {
             logo.image = UIImage(named: "Icone_Add-Red.png")
         } else if status == "IN_PROGRESS" {
-            logo.image = UIImage(named: "Icone_InProgress.png")
+            logo.image = UIImage(named: "Icone_InProgress-Blue.png")
         } else {
             logo.image = UIImage(named: "Icone_Done.png")
         }
