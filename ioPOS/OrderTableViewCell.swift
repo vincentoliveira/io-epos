@@ -19,6 +19,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     var restaurant: String = "none"
     var status: String = "default"
     var parent: TitleViewController?
+    var highlight: UIView?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,9 +28,11 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected {
-            backgroundColor = lightGray
+            highlight?.backgroundColor = lightGray
+            highlight?.layer.shadowOpacity = 0.3
         } else {
-            backgroundColor = darkGray
+            highlight?.backgroundColor = darkGray
+            highlight?.layer.shadowOpacity = 0
         }
     }
 
@@ -45,7 +48,6 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     }
     
     func initialize(){
-        backgroundColor = darkGray
         selectionStyle = UITableViewCellSelectionStyle.None
         frame.size.height = 140
         frame.size.width = 520
@@ -111,6 +113,16 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     
     
     // MARK: - Content functions
+    func addHighlight() {
+        highlight = UIView(frame: CGRectMake(100, 15, frame.size.width - 180, frame.size.height - 60))
+        highlight?.backgroundColor = darkGray
+        highlight?.layer.shadowOpacity = 0
+        highlight?.layer.shadowColor = UIColor.whiteColor().CGColor
+        highlight?.layer.shadowRadius = 5
+        highlight?.layer.shadowOffset = CGSize(width: 0, height: 0)
+        addSubview(highlight!)
+    }
+    
     func setCircle(){
         let status = source!.valueForKey("status").description
         
@@ -171,11 +183,11 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
                 name += source!.valueForKey("client").valueForKey("lastname").description
             }
         }
-        var nameLbl = newLabel(CGRectMake(110, 19, 300, 16),
+        var nameLbl = newLabel(CGRectMake(10, 4, 300, 16),
             text: name, align: NSTextAlignment.Left)
         nameLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         nameLbl.sizeToFit()
-        contentView.addSubview(nameLbl)
+        highlight?.addSubview(nameLbl)
         return nameLbl.frame.size
     }
     
@@ -186,26 +198,26 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         } else {
             id += "???"
         }
-        var idLbl = newLabel(CGRectMake(120 + nameSize.width, 23, 100, 12),
+        var idLbl = newLabel(CGRectMake(20 + nameSize.width, 8, 100, 12),
             text: id, align: NSTextAlignment.Left)
         idLbl.font = UIFont(name: "HelveticaNeue", size: 12)
-        contentView.addSubview(idLbl)
+        highlight?.addSubview(idLbl)
     }
     
     func setTypeLabel(nameSize: CGSize) {
-        var typeLbl = newLabel(CGRectMake(110, 23 + nameSize.height, 50, 20),
-            text: "Commande ONLINE", align: NSTextAlignment.Left)
+        var typeLbl = newLabel(CGRectMake(10, 8 + nameSize.height, 50, 20),
+            text: "Commande " + source!.valueForKey("source").description, align: NSTextAlignment.Left)
         typeLbl.font = UIFont(name: "HelveticaNeue", size: 12)
         typeLbl.sizeToFit()
-        contentView.addSubview(typeLbl)
+        highlight?.addSubview(typeLbl)
     }
     
     func setPriceLabel() {
         var price: String = source!.valueForKey("total") != nil ? NSString(format: "%.02f", locale: nil, source!.valueForKey("total") as Float) + "€" : "??.??€"
-        var priceLbl = newLabel(CGRectMake(frame.width - 290, 91 - 50, 200, 50),
+        var priceLbl = newLabel(CGRectMake(highlight!.frame.width - 210, 31, 200, 50),
             text: price, align: NSTextAlignment.Right)
         priceLbl.font = UIFont(name: "HelveticaNeue-Thin", size: 50)
-        contentView.addSubview(priceLbl)
+        highlight?.addSubview(priceLbl)
     }
     
     func setTimeLabel() {
@@ -239,10 +251,12 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     func setInfo(o: NSObject) {
         source = o
         
-        addSeparator(CGRectMake(0, 0, frame.size.width, 15))
+        backgroundColor = darkDarkGray
+        /*addSeparator(CGRectMake(0, 0, frame.size.width, 15))
         addSeparator(CGRectMake(0, frame.size.height - 45, frame.size.width, 45))
         addSeparator(CGRectMake(0, 0, 100, frame.size.height))
-        addSeparator(CGRectMake(frame.size.width - 80, 0, 100, frame.size.height))
+        addSeparator(CGRectMake(frame.size.width - 80, 0, 100, frame.size.height))*/
+        addHighlight()
         
         let nameSize = setClientLabel()
         setIdLabel(nameSize)

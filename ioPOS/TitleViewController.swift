@@ -79,8 +79,8 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         menuBar.layer.shadowOpacity = 1
         menuBar.layer.shadowRadius = 10
         filterBar.layer.shadowColor = UIColor.blackColor().CGColor
-        filterBar.layer.shadowOpacity = 0.5
-        filterBar.layer.shadowRadius = 5
+        filterBar.layer.shadowOpacity = 1
+        filterBar.layer.shadowRadius = 10
     }
     
     func setFilters(){
@@ -275,6 +275,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         newCart.setValue(order["id"] as Int, forKey: "id")
         newCart.setValue(order["status"] as String, forKey: "status")
+        newCart.setValue(order["source"] as String, forKey: "source")
         newCart.setValue(order["total"] as Float, forKey: "total")
         newCart.setValue(order["total_unpayed"] as Float, forKey: "total_unpayed")
         

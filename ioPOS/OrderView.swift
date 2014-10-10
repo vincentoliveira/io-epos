@@ -104,7 +104,7 @@ class OrderView: UIView, RestClientProtocol {
     func setDetails(){
         var id: String = "N°"
         id += source!.valueForKey("id").description + "\n"
-        id += "Commande ONLINE\n"
+        id += "Commande " + source!.valueForKey("source").description + "\n"
         var nstime : NSString = source!.valueForKey("delivery").description
         id += (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
         
