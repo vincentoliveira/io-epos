@@ -52,7 +52,6 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     func setRestaurant(){
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         restaurant = appDelegate.getRestaurant()!
-        //restaurant = "NormanWordpress" //TMP
     }
     
     func initOutlets(){
@@ -111,6 +110,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
                 NSString(format: "%.02f", locale: nil, cart.valueForKey("total") as Float) + "€ " +
                 cart.valueForKey("client").valueForKey("lastname").description + " " +
                 cart.valueForKey("client").valueForKey("firstname").description + " " +
+                cart.valueForKey("source").description + " " +
                 (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
             let noMatch = searchField.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)?
             return (noMatch != nil)

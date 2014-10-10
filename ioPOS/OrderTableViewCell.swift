@@ -205,8 +205,9 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     }
     
     func setTypeLabel(nameSize: CGSize) {
+        var type = (source != nil && source!.valueForKey("source") != nil) ? source!.valueForKey("source").description : "UNKNOWN"
         var typeLbl = newLabel(CGRectMake(10, 8 + nameSize.height, 50, 20),
-            text: "Commande " + source!.valueForKey("source").description, align: NSTextAlignment.Left)
+            text: "Commande " + type, align: NSTextAlignment.Left)
         typeLbl.font = UIFont(name: "HelveticaNeue", size: 12)
         typeLbl.sizeToFit()
         highlight?.addSubview(typeLbl)
@@ -226,7 +227,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         timeStmp.backgroundColor = UIColor(white: 0.25, alpha: 1)
         contentView.addSubview(timeStmp)
         
-        var nstime : NSString = (source!.valueForKey("delivery") != nil) ? source!.valueForKey("delivery").description : "..........??:??"
+        var nstime : NSString = (source!.valueForKey("delivery") != nil) ? source!.valueForKey("delivery").description : "...........??:??.."
         var time: String = (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
         var timeLbl = newLabel(CGRectMake(100, 99, width, 30), text: time, align: NSTextAlignment.Center)
         timeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
@@ -234,7 +235,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     }
     
     func setButtons() {
-        let status = source!.valueForKey("status").description
+        let status = (source != nil && source!.valueForKey("status") != nil) ? source!.valueForKey("status").description : "DONE"
         if status == "INIT" {
             var validateB = newButton(CGRectMake(frame.size.width - 76, 15, 64, 80),
                 color: UIColor(red: 0.1, green: 0.7, blue: 0.3, alpha: 1), title: "Icone_Done.png")
