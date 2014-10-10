@@ -69,6 +69,8 @@ class LoginViewController: UIViewController, RestClientProtocol {
             
             context.save(nil)
             
+            appDeleguage.setRestaurant(token["token"] as? String)
+            
             redirectToPOS()
         } else {
             errorLabel.text = results["message"] as String!

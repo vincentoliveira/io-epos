@@ -52,7 +52,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     func setRestaurant(){
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         restaurant = appDelegate.getRestaurant()!
-        restaurant = "NormanWordpress" //TMP
+        //restaurant = "NormanWordpress" //TMP
     }
     
     func initOutlets(){
