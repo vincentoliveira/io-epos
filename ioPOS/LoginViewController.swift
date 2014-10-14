@@ -11,10 +11,10 @@ import CoreData
 
 class LoginViewController: UIViewController, RestClientProtocol {
     
-    @IBOutlet var errorLabel : UILabel!
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet var loginTextField : UITextField!
     @IBOutlet var passwordTextField : UITextField!
-    @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +35,6 @@ class LoginViewController: UIViewController, RestClientProtocol {
             
             redirectToPOS()
         }
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,7 +75,8 @@ class LoginViewController: UIViewController, RestClientProtocol {
             
             redirectToPOS()
         } else {
-            errorLabel.text = results["message"] as String!
+            //errorLabel.text = results["message"] as String!
+            errorLabel.text = "Identifiants invalides"
         }
         
         self.activityIndicatorView.stopAnimating();

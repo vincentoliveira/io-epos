@@ -18,11 +18,13 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var reloadButton: UIButton!
     
     let cellIdentifier = "OrderCell"
     var timer = NSTimer()
     var items = [NSObject]()
-    var filteredItems  = [NSObject]()
+    var selectedItems = [NSObject]()
+    var filteredItems = [NSObject]()
     var chosen: Int = -1
     var chosen_id = ""
     var restaurant = ""
@@ -32,7 +34,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(red: 0.14, green: 0.16, blue: 0.17, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.16, green: 0.18, blue: 0.19, alpha: 1)
         setRestaurant()
         initOutlets()
         setFilters()
@@ -71,6 +73,15 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.registerClass(OrderTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.rowHeight = 140
         
+        menuBar.backgroundColor = UIColor(red: 0.21, green: 0.235, blue: 0.26, alpha: 1)
+        
+        reloadButton.frame = activityIndicatorView.frame
+        let aSelector: Selector = "loadOrders"
+        reloadButton.addTarget(self, action: aSelector, forControlEvents: UIControlEvents.TouchUpInside)
+        var buttonimg = UIImageView(frame: CGRectMake(0, 0, reloadButton.frame.width, reloadButton.frame.height))
+        buttonimg.image = UIImage(named: "Icone_Ellipse-Green.png")
+        reloadButton.addSubview(buttonimg)
+        
         addShadows()
     }
     
@@ -85,9 +96,9 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func setFilters(){
         addFilter("All", index: 0)
-        addFilter("Add", index: 1)
+        addFilter("New", index: 1)
         addFilter("InProgress", index: 2)
-        addFilter("No-pay", index: 3)
+        addFilter("NoPay", index: 3)
         addFilter("Done", index: 4)
         addFilter("History", index: 5)
     }
@@ -103,9 +114,8 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     // MARK: - Search functions
     func filterContentForSearchText(searchText: String) {
-        // Filter the array using the filter method
         self.searchtext = searchText
-        filteredItems = items.filter({( cart: NSObject) -> Bool in
+        filteredItems = selectedItems.filter({( cart: NSObject) -> Bool in
             if (searchText == "") { return true }
             var nstime : NSString = cart.valueForKey("delivery") != nil ? cart.valueForKey("delivery").description : "                  "
             var searchField: String = cart.valueForKey("id") != nil ? cart.valueForKey("id").description + " " : ""
@@ -122,22 +132,17 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func searchBar(_searchBar: UISearchBar,
         textDidChange searchText: String) {
-            //println("Begin search 1")
             self.filterContentForSearchText(searchText)
-            chooseAgain()
             tableView.reloadData()
+            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
     }
     
     func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
-        /*println("Begin search 2")
-        self.filterContentForSearchText(searchString)*/
         tableView.reloadData()
         return true
     }
     
     func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
-        /*println("Begin search 3")
-        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)*/
         tableView.reloadData()
         return true
     }
@@ -158,16 +163,23 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         cell.setInfo(filteredItems[indexPath.row])
         return cell
-        
-        /*if (items[indexPath.row].valueForKey("status").description == "INIT") { cell.hidden = true }*/
     }
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        chosen = indexPath.row
-        if (filteredItems[chosen].valueForKey("id") != nil) {
-            chosen_id = filteredItems[chosen].valueForKey("id").description
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(false, animated: false)
+        if chosen != indexPath.row {
+            chosen = indexPath.row
+            if (filteredItems[chosen].valueForKey("id") != nil) {
+                chosen_id = filteredItems[chosen].valueForKey("id").description
+                clearDetailInfo()
+                setDetailInfo(filteredItems[chosen])
+                tableView.cellForRowAtIndexPath(indexPath)?.setHighlighted(true, animated: false)
+            }
+        } else {
+            chosen = -1
             clearDetailInfo()
-            setDetailInfo(filteredItems[chosen])
+            chosen_id = ""
+            tableView.cellForRowAtIndexPath(indexPath)?.setHighlighted(false, animated: false)
         }
     }
 
@@ -177,6 +189,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         print("Reload orders -> ")
         errorLabel.text = nil
         self.activityIndicatorView.startAnimating();
+        reloadButton.hidden = true;
         
         let restClient = RestClient()
         restClient.delegate = self;
@@ -201,11 +214,13 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         reloadTableView()
-        self.activityIndicatorView.stopAnimating();
+        self.activityIndicatorView.stopAnimating()
+        reloadButton.hidden = false
     }
     
     func didFailWithError(error: NSError!) {
-        self.activityIndicatorView.stopAnimating();
+        self.activityIndicatorView.stopAnimating()
+        reloadButton.hidden = false
         errorLabel.text = "Pas de réseau"
     }
     
@@ -222,13 +237,14 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         resetItemsList(context.executeFetchRequest(request, error: nil))
         
         tableView.reloadData()
-        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setSelected(true, animated: false)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
         updateViewConstraints()
     }
     
     func resetItemsList(results: [AnyObject]?){
         items.removeAll(keepCapacity: true)
         items = results as [NSObject]
+        selectedItems = items
         filterContentForSearchText(searchtext)
     }
     
@@ -236,11 +252,11 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         if chosen > -1 {
             clearDetailInfo()
             chosen = -1
-            for (var i = items.count-1; i >= 0; i--) {
-                var id: AnyObject? = items[i].valueForKey("id")
+            for (var i = filteredItems.count-1; i >= 0; i--) {
+                var id: AnyObject? = filteredItems[i].valueForKey("id")
                 if id != nil && id!.description == chosen_id {
                     chosen = i
-                    setDetailInfo(items[chosen])
+                    setDetailInfo(filteredItems[chosen])
                     break
                 }
             }
@@ -267,6 +283,15 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         newClient.setValue(client["username"], forKey: "username")
         newClient.setValue(identity["firstname"], forKey: "firstname")
         newClient.setValue(identity["lastname"], forKey: "lastname")
+        if (identity["email"] is NSString) { newClient.setValue(identity["email"], forKey: "email") }
+        if (identity["phone1"] is NSDictionary) {
+            var phone = identity["phone1"]!.valueForKey("prefix")!.description + identity["phone1"]!.valueForKey("number")!.description
+            newClient.setValue(phone, forKey: "phone1")
+        }
+        if (identity["phone2"] is NSDictionary) {
+            var phone = identity["phone2"]!.valueForKey("prefix")!.description + identity["phone2"]!.valueForKey("number")!.description
+            newClient.setValue(phone, forKey: "phone2")
+        }
         newClient.setValue(newCart, forKey: "order")
         
         newCart.setValue(newClient, forKey: "client")
@@ -363,5 +388,36 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         for b : FilterButton in filterBar.subviews as [FilterButton] {
             b.untoggle()
         }
+    }
+    
+    func filterAll() {
+        selectedItems = items
+        filterContentForSearchText(searchtext)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+    }
+    func filterNew() {
+        selectedItems = items
+        filterContentForSearchText(searchtext)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+    }
+    func filterInProgress() {
+        selectedItems = items
+        filterContentForSearchText(searchtext)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+    }
+    func filterDone() {
+        selectedItems = items
+        filterContentForSearchText(searchtext)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+    }
+    func filterNoPay() {
+        selectedItems = items
+        filterContentForSearchText(searchtext)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+    }
+    func filterHistory() {
+        selectedItems = items
+        filterContentForSearchText(searchtext)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
     }
 }

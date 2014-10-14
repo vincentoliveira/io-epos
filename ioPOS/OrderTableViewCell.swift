@@ -19,7 +19,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     var restaurant: String = "none"
     var status: String = "default"
     var parent: TitleViewController?
-    var highlight: UIView?
+    var main: UIView?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,12 +27,15 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        if selected {
-            highlight?.backgroundColor = lightGray
-            highlight?.layer.shadowOpacity = 0.3
+    }
+    
+    override func setHighlighted(highlight: Bool, animated: Bool) {
+        if highlight {
+            main?.backgroundColor = lightGray
+            main?.layer.shadowOpacity = 0.3
         } else {
-            highlight?.backgroundColor = darkGray
-            highlight?.layer.shadowOpacity = 0
+            main?.backgroundColor = darkGray
+            main?.layer.shadowOpacity = 0
         }
     }
 
@@ -114,13 +117,13 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     
     // MARK: - Content functions
     func addHighlight() {
-        highlight = UIView(frame: CGRectMake(60, 15, frame.size.width - 140, frame.size.height - 60))
-        highlight?.backgroundColor = darkGray
-        highlight?.layer.shadowOpacity = 0
-        highlight?.layer.shadowColor = UIColor.whiteColor().CGColor
-        highlight?.layer.shadowRadius = 5
-        highlight?.layer.shadowOffset = CGSize(width: 0, height: 0)
-        addSubview(highlight!)
+        main = UIView(frame: CGRectMake(60, 15, frame.size.width - 140, frame.size.height - 60))
+        main?.backgroundColor = darkGray
+        main?.layer.shadowOpacity = 0
+        main?.layer.shadowColor = UIColor.whiteColor().CGColor
+        main?.layer.shadowRadius = 5
+        main?.layer.shadowOffset = CGSize(width: 0, height: 0)
+        addSubview(main!)
     }
     
     func setCircle(){
@@ -128,7 +131,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         
         var circle = UIImageView(frame: CGRectMake(0, 15, 50, 50))
         if status == "INIT" {
-            circle.image = UIImage(named: "Icone_Ellipse.png")
+            circle.image = UIImage(named: "Icone_Ellipse-Green.png")
         } else if status == "IN_PROGRESS" {
             circle.image = UIImage(named: "Icone_Ellipse-Blue.png")
         } else {
@@ -141,7 +144,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         
         var logo = UIImageView(frame: CGRectMake(40, 2, 16, 16))
         if status == "INIT" {
-            logo.image = UIImage(named: "Icone_Add-Red.png")
+            logo.image = UIImage(named: "Icone_Add-Green.png")
         } else if status == "IN_PROGRESS" {
             logo.image = UIImage(named: "Icone_InProgress-Blue.png")
         } else {
@@ -157,21 +160,22 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     
     func setUnpayed(){
         if source!.valueForKey("total_unpayed") != nil {
-            if source!.valueForKey("total_unpayed") as Float > 0 {
-                let width: CGFloat = (frame.size.width - 144) / 2
-                var payeStmp = UILabel(frame: CGRectMake(width + 64, 99, width, 30))
-                payeStmp.backgroundColor = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
-                contentView.addSubview(payeStmp)
-                
-                var payeLbl = newLabel(CGRectMake(width + 94, 99, width - 30, 30),
-                    text: "NON PAYEE", align: NSTextAlignment.Center)
-                payeLbl.font = UIFont(name: "HelveticaNeue", size: 16)
-                contentView.addSubview(payeLbl)
-                
-                var img = UIImageView(frame: CGRectMake(width + 70, 105, 23, 18))
-                img.image = UIImage(named: "Icone_No-pay.png")
-                contentView.addSubview(img)
-            }
+            var unpayed = source!.valueForKey("total_unpayed") as Float > 0
+            let width: CGFloat = (frame.size.width - 144) / 2
+            var payeStmp = UILabel(frame: CGRectMake(width + 64, 99, width, 30))
+            payeStmp.backgroundColor = unpayed ? UIColor(red: 1, green: 0.5, blue: 0, alpha: 1) : UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
+            if unpayed { contentView.addSubview(payeStmp) }
+            
+            var wdth: CGFloat = unpayed ? 23 : 18
+            var img = UIImageView(frame: CGRectMake(width + 70, 105, wdth, 18))
+            img.image = UIImage(named: unpayed ? "Icone_NoPay.png" : "Icone_Done-Green.png")
+            contentView.addSubview(img)
+            
+            var payeLbl = newLabel(CGRectMake(width + 71 + wdth, 99, width - 7 - wdth, 30),
+                text: unpayed ? "NON PAYEE" : "PAYEE", align: NSTextAlignment.Center)
+            if !unpayed { payeLbl.textColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1) }
+            payeLbl.font = UIFont(name: "HelveticaNeue", size: 16)
+            contentView.addSubview(payeLbl)
         }
     }
     
@@ -189,7 +193,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
             text: name, align: NSTextAlignment.Left)
         nameLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         nameLbl.sizeToFit()
-        highlight?.addSubview(nameLbl)
+        main?.addSubview(nameLbl)
         return nameLbl.frame.size
     }
     
@@ -200,10 +204,11 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         } else {
             id += "???"
         }
-        var idLbl = newLabel(CGRectMake(20 + nameSize.width, 8, 100, 12),
+        var idLbl = newLabel(CGRectMake(20 + nameSize.width, 4, 100, 16),
             text: id, align: NSTextAlignment.Left)
-        idLbl.font = UIFont(name: "HelveticaNeue", size: 12)
-        highlight?.addSubview(idLbl)
+        idLbl.font = UIFont(name: "HelveticaNeue", size: 16)
+        idLbl.sizeToFit()
+        main?.addSubview(idLbl)
     }
     
     func setTypeLabel(nameSize: CGSize) {
@@ -212,21 +217,21 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
             text: "Commande " + type, align: NSTextAlignment.Left)
         typeLbl.font = UIFont(name: "HelveticaNeue", size: 12)
         typeLbl.sizeToFit()
-        highlight?.addSubview(typeLbl)
+        main?.addSubview(typeLbl)
     }
     
     func setPriceLabel() {
         var price: String = source!.valueForKey("total") != nil ? NSString(format: "%.02f", locale: nil, source!.valueForKey("total") as Float) + "€" : "??.??€"
-        var priceLbl = newLabel(CGRectMake(highlight!.frame.width - 210, 31, 200, 50),
+        var priceLbl = newLabel(CGRectMake(main!.frame.width - 210, 31, 200, 50),
             text: price, align: NSTextAlignment.Right)
         priceLbl.font = UIFont(name: "HelveticaNeue-Thin", size: 50)
-        highlight?.addSubview(priceLbl)
+        main?.addSubview(priceLbl)
     }
     
     func setTimeLabel() {
         let width: CGFloat = (frame.size.width - 144) / 2
         var timeStmp = UILabel(frame: CGRectMake(60, 99, width, 30))
-        timeStmp.backgroundColor = UIColor(white: 0.25, alpha: 1)
+        timeStmp.backgroundColor = UIColor(red: 0.26, green: 0.25, blue: 0.25, alpha: 1)
         contentView.addSubview(timeStmp)
         
         var nstime : NSString = (source!.valueForKey("delivery") != nil) ? source!.valueForKey("delivery").description : "...........??:??.."
@@ -240,7 +245,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         let status = (source != nil && source!.valueForKey("status") != nil) ? source!.valueForKey("status").description : "DONE"
         if status == "INIT" {
             var validateB = newButton(CGRectMake(frame.size.width - 76, 15, 64, 80),
-                color: UIColor(red: 0.1, green: 0.7, blue: 0.3, alpha: 1), title: "Icone_Done.png")
+                color: UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1), title: "Icone_Done.png")
             validateB.addTarget(self, action: "validate", forControlEvents: UIControlEvents.TouchDown)
             contentView.addSubview(validateB)
             

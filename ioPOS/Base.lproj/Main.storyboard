@@ -26,12 +26,6 @@
                                     <action selector="onLoginClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lww-12-k44"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Entrez vos informations de connexion" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2j-ZA-deS">
-                                <rect key="frame" x="368" y="264" width="289" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Identifiant" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZLn-hG-eA1">
                                 <rect key="frame" x="368" y="293" width="289" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -42,17 +36,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oUa-up-27B">
-                                <rect key="frame" x="368" y="192" width="289" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Entrez vos informations de connexion" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2j-ZA-deS">
+                                <rect key="frame" x="368" y="264" width="289" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="kIc-fu-30K">
-                                <rect key="frame" x="494" y="135" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" white="0.49952746980000001" alpha="1" colorSpace="calibratedWhite"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jV9-nF-V2K">
+                                <rect key="frame" x="368" y="222" width="289" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.65094302400000004" green="0.0" blue="0.019623104070000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="pRG-Qk-oMG">
+                                <rect key="frame" x="494" y="153" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.091231496710526314" alpha="1" colorSpace="calibratedWhite"/>
@@ -62,8 +59,8 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="kIc-fu-30K" id="dOC-fR-lGE"/>
-                        <outlet property="errorLabel" destination="oUa-up-27B" id="Ngf-gB-6Rp"/>
+                        <outlet property="activityIndicatorView" destination="pRG-Qk-oMG" id="LFu-C4-dRI"/>
+                        <outlet property="errorLabel" destination="jV9-nF-V2K" id="ifh-Sq-Ob0"/>
                         <outlet property="loginTextField" destination="ZLn-hG-eA1" id="gLc-OX-bIh"/>
                         <outlet property="passwordTextField" destination="d3A-tR-VkB" id="j9c-QU-QQL"/>
                     </connections>
@@ -110,8 +107,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="orH-J5-whv">
-                                <rect key="frame" x="16" y="58" width="20" height="20"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="orH-J5-whv">
+                                <rect key="frame" x="16" y="58" width="37" height="37"/>
                             </activityIndicatorView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Usk-rD-nBp" customClass="OrderView" customModule="ioPOS" customModuleProvider="target">
                                 <rect key="frame" x="626" y="69" width="398" height="679"/>
@@ -149,6 +146,12 @@
                                 <rect key="frame" x="0.0" y="155" width="46" height="433"/>
                                 <color key="backgroundColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnV-AO-w8J">
+                                <rect key="frame" x="16" y="58" width="37" height="37"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.14999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -163,6 +166,7 @@
                         <outlet property="errorLabel" destination="hdX-EO-ZWf" id="vPv-je-DA1"/>
                         <outlet property="filterBar" destination="byU-QV-WFp" id="pbp-Qz-cH1"/>
                         <outlet property="menuBar" destination="Z00-2O-2pu" id="qUq-dT-QUa"/>
+                        <outlet property="reloadButton" destination="wnV-AO-w8J" id="io2-tM-ht8"/>
                         <outlet property="searchBar" destination="aBa-mc-Gmk" id="cJB-Yy-gKw"/>
                         <outlet property="tableView" destination="Yrq-8N-NrU" id="GCp-h0-OWg"/>
                     </connections>

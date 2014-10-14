@@ -43,7 +43,10 @@ class FilterButton: UIButton {
         
         addTarget(parent, action: "untoggleAll", forControlEvents: UIControlEvents.TouchDown)
         addTarget(self, action: "toggle", forControlEvents: UIControlEvents.TouchDown)
+        addTarget(parent, action: Selector("filter\(title)"), forControlEvents: UIControlEvents.TouchDown)
         if (title == "All") { toggle() }
+        
+        backgroundColor = UIColor(red: 0.21, green: 0.235, blue: 0.26, alpha: 1)
     }
 
     func toggle() {

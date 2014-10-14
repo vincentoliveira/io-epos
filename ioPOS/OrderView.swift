@@ -102,15 +102,30 @@ class OrderView: UIView, RestClientProtocol {
     }
     
     func setDetails(){
-        var id: String = "N°"
+        var id: String = ""
+        var nblines: CGFloat = 3
+        if source!.valueForKey("client").valueForKey("phone1") != nil {
+            id += source!.valueForKey("client").valueForKey("phone1").description + "\n"
+            nblines++
+        }
+        if source!.valueForKey("client").valueForKey("phone2") != nil {
+            id += source!.valueForKey("client").valueForKey("phone2").description + "\n"
+            nblines++
+        }
+        if source!.valueForKey("client").valueForKey("email") != nil {
+            var em: NSString = source!.valueForKey("client").valueForKey("email").description + "\n"
+            id += em
+            nblines += CGFloat(em.length / 33) + 1
+        }
+        id += "N°"
         id += source!.valueForKey("id").description + "\n"
         id += "Commande " + source!.valueForKey("source").description + "\n"
         var nstime : NSString = source!.valueForKey("delivery").description
         id += (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
         
-        var idLbl = newLabel(CGRectMake(115, y, 300, 63), text: id, align: NSTextAlignment.Left)
-        idLbl.textColor = gray
-        idLbl.numberOfLines = 3
+        var idLbl = newLabel(CGRectMake(115, y, frame.width - 125, 21 * nblines), text: id, align: NSTextAlignment.Left)
+        idLbl.textColor = UIColor(white: 0.3, alpha: 1)
+        idLbl.numberOfLines = nblines.hashValue
         addSubview(idLbl)
         y += idLbl.frame.height
     }
@@ -149,28 +164,30 @@ class OrderView: UIView, RestClientProtocol {
     
     func setUnpayed(){
         y += 5
-        if source!.valueForKey("total_unpayed") as Float > 0 {
-            var payeStmp = UILabel(frame: CGRectMake(10, y, frame.size.width / 2, 30))
-            payeStmp.backgroundColor = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
-            addSubview(payeStmp)
-            
-            var payeLbl = newLabel(CGRectMake(35, y, frame.size.width / 2 - 35, 30),
-                text: "NON PAYEE", align: NSTextAlignment.Center)
-            payeLbl.textColor = backgroundColor!
-            payeLbl.font = UIFont(name: "HelveticaNeue", size: 18)
-            addSubview(payeLbl)
-            
-            var img = UIImageView(frame: CGRectMake(21, y + 6, 23, 18))
-            img.image = UIImage(named: "Icone_No-pay.png")
-            addSubview(img)
-        }
+        var unpayed = source!.valueForKey("total_unpayed") as Float > 0
+        let width: CGFloat = frame.size.width / 2
+        var payeStmp = UILabel(frame: CGRectMake(10, y, width, 30))
+        payeStmp.backgroundColor = unpayed ? UIColor(red: 1, green: 0.5, blue: 0, alpha: 1) : UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
+        if unpayed { addSubview(payeStmp) }
+        
+        var wdth: CGFloat = unpayed ? 23 : 18
+        var img = UIImageView(frame: CGRectMake(16, y + 6, wdth, 18))
+        img.image = UIImage(named: unpayed ? "Icone_NoPay.png" : "Icone_Done-Green.png")
+        addSubview(img)
+        
+        var payeLbl = newLabel(CGRectMake(17 + wdth, y, width - 7 - wdth, 30),
+            text: unpayed ? "NON PAYEE" : "PAYEE", align: NSTextAlignment.Center)
+        if unpayed { payeLbl.textColor = UIColor(white: 1, alpha: 1) }
+        else { payeLbl.textColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1) }
+        payeLbl.font = UIFont(name: "HelveticaNeue", size: 16)
+        addSubview(payeLbl)
         y += 35
     }
     
     func setProducts(){
         subY = 0
 
-        var productList = UIScrollView(frame: CGRectMake(10, y, frame.size.width - 20, 371))
+        var productList = UIScrollView(frame: CGRectMake(10, y, frame.size.width - 20, frame.height - y - 147))
         var nameDescriptor = NSSortDescriptor(key: "name", ascending: true)
         var notOrderedProducts: NSMutableSet = source!.valueForKey("products") as NSMutableSet
         var products = notOrderedProducts.sortedArrayUsingDescriptors([nameDescriptor])
@@ -270,7 +287,7 @@ class OrderView: UIView, RestClientProtocol {
         addSubview(discardB)
         
         var validateB = newButton(CGRectMake(80 + 20, y, frame.size.width - 80 - 30, 50),
-            color: UIColor(red: 0.1, green: 0.7, blue: 0.3, alpha: 1), title: "Etape suivante")
+            color: UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1), title: "Etape suivante")
         validateB.addTarget(self, action: "validate", forControlEvents: UIControlEvents.TouchDown)
         addSubview(validateB)
         y += 10 + validateB.frame.size.height
