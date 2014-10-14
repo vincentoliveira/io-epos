@@ -120,7 +120,7 @@ class OrderView: UIView, RestClientProtocol {
         
         var circle = UIImageView(frame: CGRectMake(10, 20, 81, 81))
         if status == "INIT" {
-            circle.image = UIImage(named: "Icone_Ellipse.png")
+            circle.image = UIImage(named: "Icone_Ellipse-Green.png")
         } else if status == "IN_PROGRESS" {
             circle.image = UIImage(named: "Icone_Ellipse-Blue.png")
         } else {
@@ -133,11 +133,11 @@ class OrderView: UIView, RestClientProtocol {
         
         var logo = UIImageView(frame: CGRectMake(10 + 65, 5, 30, 30))
         if status == "INIT" {
-            logo.image = UIImage(named: "Icone_Add.png")
+            logo.image = UIImage(named: "Icone_Add-Green.png")
         } else if status == "IN_PROGRESS" {
-            logo.image = UIImage(named: "Icone_InProgress.png")
+            logo.image = UIImage(named: "Icone_InProgress-Blue.png")
         } else {
-            logo.image = UIImage(named: "Icone_Done.png")
+            logo.image = UIImage(named: "Icone_Done-Gray.png")
         }
         addSubview(logo)
     }

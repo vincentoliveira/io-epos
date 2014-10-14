@@ -55,7 +55,7 @@ class LoginViewController: UIViewController, RestClientProtocol {
     
     func didRecieveResponse(results: NSDictionary) {
         // Store the results in our table data array
-        println(results)
+        //println(results)
         
         if let token: NSDictionary = results["restaurant_token"] as? NSDictionary {
             var appDeleguage : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
@@ -66,6 +66,10 @@ class LoginViewController: UIViewController, RestClientProtocol {
             newRestaurantToken.setValue(token["token"] as String, forKey: "token")
             newRestaurantToken.setValue(loginTextField.text as String, forKey: "email")
             newRestaurantToken.setValue(passwordTextField.text as String, forKey: "password")
+            
+            var appDelegate : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
+            appDelegate.setRestaurant(newRestaurantToken.valueForKey("token") as? String)
+            //println("token: " + (newRestaurantToken.valueForKey("token") as String))
             
             context.save(nil)
             

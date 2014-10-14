@@ -21,10 +21,10 @@ class FilterButton: UIButton {
     func initialize(title: String) {
         self.title = title
         
-        var h: CGFloat = 30
-        var w: CGFloat = 30
-        if title == "All" || title == "No-pay" || title == "History" { w = 40 }
-        if title == "All" { h = 24 }
+        var h: CGFloat = 20
+        var w: CGFloat = 20
+        if title == "All" || title == "No-pay" || title == "History" { w = 27 }
+        if title == "All" { h = 16 }
         var x = frame.width / 2 - w / 2
         var y = frame.height / 2 - h / 2
         white = UIImageView(frame: CGRectMake(x, y, w, h))

@@ -27,6 +27,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     var chosen_id = ""
     var restaurant = ""
     var filter = "All"
+    var searchtext = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +97,6 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         var filter: FilterButton = FilterButton(frame: CGRectMake(0, h * index, filterBar.frame.width, h))
         filter.parent = self
         filter.initialize(title)
-        println(filter.description)
         filterBar.addSubview(filter)
     }
     
@@ -104,36 +104,40 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     // MARK: - Search functions
     func filterContentForSearchText(searchText: String) {
         // Filter the array using the filter method
+        self.searchtext = searchText
         filteredItems = items.filter({( cart: NSObject) -> Bool in
-            var nstime : NSString = cart.valueForKey("delivery").description
-            let searchField: String = cart.valueForKey("id").description + " " +
-                NSString(format: "%.02f", locale: nil, cart.valueForKey("total") as Float) + "€ " +
-                cart.valueForKey("client").valueForKey("lastname").description + " " +
-                cart.valueForKey("client").valueForKey("firstname").description + " " +
-                cart.valueForKey("source").description + " " +
-                (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
-            let noMatch = searchField.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)?
-            return (noMatch != nil)
+            if (searchText == "") { return true }
+            var nstime : NSString = cart.valueForKey("delivery") != nil ? cart.valueForKey("delivery").description : "                  "
+            var searchField: String = cart.valueForKey("id") != nil ? cart.valueForKey("id").description + " " : ""
+            searchField += (cart.valueForKey("total") != nil) ? NSString(format: "%.02f", locale: nil, cart.valueForKey("total") as Float) + "€ " : ""
+            searchField += cart.valueForKey("client") != nil && cart.valueForKey("client").valueForKey("lastname") != nil ? cart.valueForKey("client").valueForKey("lastname").description + " " : ""
+            searchField += cart.valueForKey("client") != nil && cart.valueForKey("client").valueForKey("firstname") != nil ? cart.valueForKey("client").valueForKey("firstname").description + " " : ""
+            searchField += cart.valueForKey("source") != nil ? cart.valueForKey("source").description + " " : ""
+            searchField += (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
+            let match = searchField.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)?
+            return (match != nil)
         })
+        chooseAgain()
     }
     
     func searchBar(_searchBar: UISearchBar,
         textDidChange searchText: String) {
-            println("Begin search 1")
+            //println("Begin search 1")
             self.filterContentForSearchText(searchText)
+            chooseAgain()
             tableView.reloadData()
     }
     
     func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
-        println("Begin search 2")
-        self.filterContentForSearchText(searchString)
+        /*println("Begin search 2")
+        self.filterContentForSearchText(searchString)*/
         tableView.reloadData()
         return true
     }
     
     func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
-        println("Begin search 3")
-        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
+        /*println("Begin search 3")
+        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)*/
         tableView.reloadData()
         return true
     }
@@ -141,11 +145,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     // MARK: - Tableview functions
     func tableView(tableView: UITableView, numberOfRowsInSection section:    Int) -> Int {
-        if searchBar.text != "" {
-            return filteredItems.count
-        } else {
-            return items.count
-        }
+        return filteredItems.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -156,8 +156,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.parent = self
         cell.darkDarkGray = view.backgroundColor!
         
-        if searchBar.text != "" { cell.setInfo(filteredItems[indexPath.row]) }
-        else { cell.setInfo(items[indexPath.row]) }
+        cell.setInfo(filteredItems[indexPath.row])
         return cell
         
         /*if (items[indexPath.row].valueForKey("status").description == "INIT") { cell.hidden = true }*/
@@ -165,15 +164,17 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
         chosen = indexPath.row
-        chosen_id = items[chosen].valueForKey("id").description
-        clearDetailInfo()
-        setDetailInfo(items[chosen])
+        if (filteredItems[chosen].valueForKey("id") != nil) {
+            chosen_id = filteredItems[chosen].valueForKey("id").description
+            clearDetailInfo()
+            setDetailInfo(filteredItems[chosen])
+        }
     }
 
     
     // MARK: - Webservice & reload function
     func loadOrders() {
-        println("Reload orders")
+        print("Reload orders -> ")
         errorLabel.text = nil
         self.activityIndicatorView.startAnimating();
         
@@ -191,10 +192,14 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         var oldOrdersArray = previous as [NSManagedObject]
         for order:NSManagedObject in oldOrdersArray { context.deleteObject(order) }
         
-        let ordersArray = results["orders"] as NSArray;
-        for order in ordersArray { parseOrder(order, context: context) }
+        if (results["orders"]) != nil {
+            let ordersArray = results["orders"] as NSArray;
+            for order in ordersArray { parseOrder(order, context: context) }
+            context.save(nil)
+        } else {
+            errorLabel.text = "Token périmé. Reconnectez-vous."
+        }
         
-        context.save(nil)
         reloadTableView()
         self.activityIndicatorView.stopAnimating();
     }
@@ -224,7 +229,10 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     func resetItemsList(results: [AnyObject]?){
         items.removeAll(keepCapacity: true)
         items = results as [NSObject]
-        
+        filterContentForSearchText(searchtext)
+    }
+    
+    func chooseAgain() {
         if chosen > -1 {
             clearDetailInfo()
             chosen = -1

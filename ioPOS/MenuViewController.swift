@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class MenuViewController: UITableViewController {
+class MenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class MenuViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+/*
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: (UITableView!)) -> Int {
@@ -39,7 +39,7 @@ class MenuViewController: UITableViewController {
         // Return the number of rows in the section.
         return 0
     }
-
+*/
     @IBAction func deconnexion(sender: AnyObject) {
         //Remove token
         var appDeleguage : AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate);
@@ -50,6 +50,7 @@ class MenuViewController: UITableViewController {
         
         var results:NSArray = context.executeFetchRequest(request, error: nil)!
         for token in results {
+            println("delete: " + token.description)
             context.deleteObject(token as NSManagedObject);
         }
         context.save(nil);

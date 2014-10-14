@@ -50,7 +50,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     func initialize(){
         selectionStyle = UITableViewCellSelectionStyle.None
         frame.size.height = 140
-        frame.size.width = 520
+        frame.size.width = 480
     }
     
     
@@ -114,7 +114,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     
     // MARK: - Content functions
     func addHighlight() {
-        highlight = UIView(frame: CGRectMake(100, 15, frame.size.width - 180, frame.size.height - 60))
+        highlight = UIView(frame: CGRectMake(60, 15, frame.size.width - 140, frame.size.height - 60))
         highlight?.backgroundColor = darkGray
         highlight?.layer.shadowOpacity = 0
         highlight?.layer.shadowColor = UIColor.whiteColor().CGColor
@@ -124,9 +124,9 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     }
     
     func setCircle(){
-        let status = source!.valueForKey("status").description
+        let status = source!.valueForKey("status") != nil ? source!.valueForKey("status").description : "DONE"
         
-        var circle = UIImageView(frame: CGRectMake(0, 15, 81, 81))
+        var circle = UIImageView(frame: CGRectMake(0, 15, 50, 50))
         if status == "INIT" {
             circle.image = UIImage(named: "Icone_Ellipse.png")
         } else if status == "IN_PROGRESS" {
@@ -137,9 +137,9 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         contentView.addSubview(circle)
     }
     func setLogo(){
-        let status = source!.valueForKey("status").description
+        let status = source!.valueForKey("status") != nil ? source!.valueForKey("status").description : "DONE"
         
-        var logo = UIImageView(frame: CGRectMake(65, 0, 30, 30))
+        var logo = UIImageView(frame: CGRectMake(40, 2, 16, 16))
         if status == "INIT" {
             logo.image = UIImage(named: "Icone_Add-Red.png")
         } else if status == "IN_PROGRESS" {
@@ -150,26 +150,28 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         contentView.addSubview(logo)
     }
     func setCenterLogo(){
-        var center = UIImageView(frame: CGRectMake(27, 15 + 17, 27, 45))
+        var center = UIImageView(frame: CGRectMake(16, 15 + 10, 18, 30))
         center.image = UIImage(named: "Icone_Bag.png")
         contentView.addSubview(center)
     }
     
     func setUnpayed(){
-        if source!.valueForKey("total_unpayed") as Float > 0 {
-            let width: CGFloat = (frame.size.width - 184) / 2
-            var payeStmp = UILabel(frame: CGRectMake(width + 104, 99, width, 30))
-            payeStmp.backgroundColor = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
-            contentView.addSubview(payeStmp)
-            
-            var payeLbl = newLabel(CGRectMake(width + 134, 99, width - 30, 30),
-                text: "NON PAYEE", align: NSTextAlignment.Center)
-            payeLbl.font = UIFont(name: "HelveticaNeue", size: 16)
-            contentView.addSubview(payeLbl)
-            
-            var img = UIImageView(frame: CGRectMake(width + 110, 105, 23, 18))
-            img.image = UIImage(named: "Icone_No-pay.png")
-            contentView.addSubview(img)
+        if source!.valueForKey("total_unpayed") != nil {
+            if source!.valueForKey("total_unpayed") as Float > 0 {
+                let width: CGFloat = (frame.size.width - 144) / 2
+                var payeStmp = UILabel(frame: CGRectMake(width + 64, 99, width, 30))
+                payeStmp.backgroundColor = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
+                contentView.addSubview(payeStmp)
+                
+                var payeLbl = newLabel(CGRectMake(width + 94, 99, width - 30, 30),
+                    text: "NON PAYEE", align: NSTextAlignment.Center)
+                payeLbl.font = UIFont(name: "HelveticaNeue", size: 16)
+                contentView.addSubview(payeLbl)
+                
+                var img = UIImageView(frame: CGRectMake(width + 70, 105, 23, 18))
+                img.image = UIImage(named: "Icone_No-pay.png")
+                contentView.addSubview(img)
+            }
         }
     }
     
@@ -182,7 +184,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
             if source!.valueForKey("client").valueForKey("lastname") != nil {
                 name += source!.valueForKey("client").valueForKey("lastname").description
             }
-        }
+        } else {name = "???"}
         var nameLbl = newLabel(CGRectMake(10, 4, 300, 16),
             text: name, align: NSTextAlignment.Left)
         nameLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
@@ -222,14 +224,14 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     }
     
     func setTimeLabel() {
-        let width: CGFloat = (frame.size.width - 184) / 2
-        var timeStmp = UILabel(frame: CGRectMake(100, 99, width, 30))
+        let width: CGFloat = (frame.size.width - 144) / 2
+        var timeStmp = UILabel(frame: CGRectMake(60, 99, width, 30))
         timeStmp.backgroundColor = UIColor(white: 0.25, alpha: 1)
         contentView.addSubview(timeStmp)
         
         var nstime : NSString = (source!.valueForKey("delivery") != nil) ? source!.valueForKey("delivery").description : "...........??:??.."
         var time: String = (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
-        var timeLbl = newLabel(CGRectMake(100, 99, width, 30), text: time, align: NSTextAlignment.Center)
+        var timeLbl = newLabel(CGRectMake(60, 99, width, 30), text: time, align: NSTextAlignment.Center)
         timeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         contentView.addSubview(timeLbl)
     }
