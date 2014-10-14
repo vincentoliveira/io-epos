@@ -244,7 +244,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     func resetItemsList(results: [AnyObject]?){
         items.removeAll(keepCapacity: true)
         items = results as [NSObject]
-        selectedItems = items
+        applyFilter()
         filterContentForSearchText(searchtext)
     }
     
@@ -390,34 +390,77 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    func applyFilter() {
+        switch (filter) {
+        case "New":
+            filterNew()
+            break
+        case "InProgress":
+            filterInProgress()
+            break
+        case "NoPay":
+            filterNoPay()
+            break
+        case "Done":
+            filterDone()
+            break
+        case "History":
+            filterHistory()
+            break
+        default:
+            filterAll()
+            break
+        }
+    }
+    
     func filterAll() {
+        filter = "All"
         selectedItems = items
         filterContentForSearchText(searchtext)
+        tableView.reloadData()
         tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
     }
     func filterNew() {
-        selectedItems = items
+        filter = "New"
+        selectedItems = items.filter({( cart: NSObject) -> Bool in
+            return cart.valueForKey("status") as NSString == "INIT"
+        })
         filterContentForSearchText(searchtext)
+        tableView.reloadData()
         tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
     }
     func filterInProgress() {
-        selectedItems = items
+        filter = "InProgress"
+        selectedItems = items.filter({( cart: NSObject) -> Bool in
+            return cart.valueForKey("status") as NSString == "IN_PROGRESS"
+        })
         filterContentForSearchText(searchtext)
+        tableView.reloadData()
         tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
     }
     func filterDone() {
-        selectedItems = items
+        filter = "Done"
+        selectedItems = items.filter({( cart: NSObject) -> Bool in
+            return cart.valueForKey("status") as NSString == "DONE"
+        })
         filterContentForSearchText(searchtext)
+        tableView.reloadData()
         tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
     }
     func filterNoPay() {
-        selectedItems = items
+        filter = "NoPay"
+        selectedItems = items.filter({( cart: NSObject) -> Bool in
+            return cart.valueForKey("total_unpayed") as Float > 0
+        })
         filterContentForSearchText(searchtext)
+        tableView.reloadData()
         tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
     }
     func filterHistory() {
+        filter = "History"
         selectedItems = items
         filterContentForSearchText(searchtext)
+        tableView.reloadData()
         tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
     }
 }

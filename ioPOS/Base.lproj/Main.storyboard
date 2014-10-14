@@ -172,64 +172,8 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lhb-bQ-R71" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="Item" id="bHz-NS-EKb">
-                    <connections>
-                        <segue destination="et2-hx-AES" kind="popover" identifier="discard" popoverAnchorBarButtonItem="bHz-NS-EKb" id="7Au-Vh-hjz">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
-                    </connections>
-                </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="2416" y="990"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="te4-qv-1nd">
-            <objects>
-                <viewController id="8ju-y4-mku" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="3lb-TT-Lf2"/>
-                        <viewControllerLayoutGuide type="bottom" id="nN3-eF-AIV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Iqy-uB-wq0">
-                        <rect key="frame" x="0.0" y="0.0" width="180" height="70"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wV-rt-UYo">
-                                <rect key="frame" x="0.0" y="0.0" width="180" height="70"/>
-                                <color key="backgroundColor" red="0.65094302400000004" green="0.0" blue="0.019623104070000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Supprimer la commande">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="poY-Nw-qrF"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="180" height="70"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cBk-jP-haS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2662" y="442"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="fxA-D3-xYR">
-            <objects>
-                <navigationController id="et2-hx-AES" sceneMemberID="viewController">
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="100" height="100"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UxC-0n-eD9">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="8ju-y4-mku" kind="relationship" relationship="rootViewController" id="EJd-nB-5Z3"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WNP-Ei-fa0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3150" y="512"/>
+            <point key="canvasLocation" x="2404" y="1008"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Saa-t0-p1g">

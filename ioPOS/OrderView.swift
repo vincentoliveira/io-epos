@@ -34,7 +34,6 @@ class OrderView: UIView, RestClientProtocol {
     }
     
     func discard(){
-        //parent!.performSegueWithIdentifier("discard", sender: parent)
         if (source != nil) && status == "default" {
             status = "cancel"
             println("cancel")
