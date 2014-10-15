@@ -10,16 +10,24 @@ import UIKit
 
 class OrderView: UIView, RestClientProtocol {
     
+    // MARK: - Attributes
     let bgc = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05)
     let gray = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+    let red = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+    let green = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
     
     var y: CGFloat = 5
     var subY: CGFloat = 0
     
     var source: NSObject?
+    var id = ""
     var restaurant: String = "none"
     var status: String = "default"
     var parent: TitleViewController?
+    
+    var grayBG = UILabel()
+    var confirmB = UIButton()
+    var cancelB = UIButton()
     
     
     // MARK: - Buttons functions
@@ -34,12 +42,32 @@ class OrderView: UIView, RestClientProtocol {
     }
     
     func discard(){
-        if (source != nil) && status == "default" {
+        if (source != nil) && status == "confirm" {
             status = "cancel"
             println("cancel")
             let restClient = RestClient()
             restClient.delegate = self;
             restClient.cancel(restaurant, cartId: source!.valueForKey("id").description);
+            
+            setHideConfirmation(true)
+        }
+    }
+    
+    func askForConfirmation(){
+        if (source != nil) && status == "default" {
+            status = "confirm"
+            println("confirm ?")
+            
+            setHideConfirmation(false)
+        }
+    }
+    
+    func cancel(){
+        if (source != nil) && status == "confirm" {
+            status = "default"
+            println("cancel")
+            
+            setHideConfirmation(true)
         }
     }
     
@@ -116,11 +144,8 @@ class OrderView: UIView, RestClientProtocol {
             id += em
             nblines += CGFloat(em.length / 33) + 1
         }
-        id += "N°"
-        id += source!.valueForKey("id").description + "\n"
-        id += "Commande " + source!.valueForKey("source").description + "\n"
         var nstime : NSString = source!.valueForKey("delivery").description
-        id += (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
+        id += "N°" + source!.valueForKey("id").description + "\nCommande " + source!.valueForKey("source").description + "\n" + (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
         
         var idLbl = newLabel(CGRectMake(115, y, frame.width - 125, 21 * nblines), text: id, align: NSTextAlignment.Left)
         idLbl.textColor = UIColor(white: 0.3, alpha: 1)
@@ -161,26 +186,45 @@ class OrderView: UIView, RestClientProtocol {
         addSubview(center)
     }
     
-    func setUnpayed(){
+    func setPayedUnpayed(){
         y += 5
-        var unpayed = source!.valueForKey("total_unpayed") as Float > 0
+        if source!.valueForKey("total_unpayed") as Float > 0 {
+            setUnpayed()
+        } else {
+            setPayed()
+        }
+        y += 35
+    }
+    func setUnpayed(){
         let width: CGFloat = frame.size.width / 2
         var payeStmp = UILabel(frame: CGRectMake(10, y, width, 30))
-        payeStmp.backgroundColor = unpayed ? UIColor(red: 1, green: 0.5, blue: 0, alpha: 1) : UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
-        if unpayed { addSubview(payeStmp) }
+        payeStmp.backgroundColor = UIColor(red: 1, green: 0.5, blue: 0, alpha: 1)
+        addSubview(payeStmp)
         
-        var wdth: CGFloat = unpayed ? 23 : 18
+        var wdth: CGFloat = 23
         var img = UIImageView(frame: CGRectMake(16, y + 6, wdth, 18))
-        img.image = UIImage(named: unpayed ? "Icone_NoPay.png" : "Icone_Done-Green.png")
+        img.image = UIImage(named: "Icone_NoPay.png")
         addSubview(img)
         
         var payeLbl = newLabel(CGRectMake(17 + wdth, y, width - 7 - wdth, 30),
-            text: unpayed ? "NON PAYEE" : "PAYEE", align: NSTextAlignment.Center)
-        if unpayed { payeLbl.textColor = UIColor(white: 1, alpha: 1) }
-        else { payeLbl.textColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1) }
+            text: "NON PAYEE", align: NSTextAlignment.Center)
+        payeLbl.textColor = UIColor(white: 1, alpha: 1)
         payeLbl.font = UIFont(name: "HelveticaNeue", size: 16)
         addSubview(payeLbl)
-        y += 35
+    }
+    func setPayed(){
+        let width: CGFloat = frame.size.width / 2
+        
+        var wdth: CGFloat = 18
+        var img = UIImageView(frame: CGRectMake(16, y + 6, wdth, 18))
+        img.image = UIImage(named: "Icone_Done-Green.png")
+        addSubview(img)
+        
+        var payeLbl = newLabel(CGRectMake(17 + wdth, y, width - 7 - wdth, 30),
+            text: "PAYEE", align: NSTextAlignment.Center)
+        payeLbl.textColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
+        payeLbl.font = UIFont(name: "HelveticaNeue", size: 16)
+        addSubview(payeLbl)
     }
     
     func setProducts(){
@@ -206,17 +250,13 @@ class OrderView: UIView, RestClientProtocol {
         var nb = pr.valueForKey("number") as Float
         var price = pr.valueForKey("price") as Float
         
-        var subNameLbl = newLabel(CGRectMake(10, subY, wdth - 40 - 80, 21),
-            text: Int(nb).description + " " + pr.valueForKey("name").description,
-            align: NSTextAlignment.Left)
-        productList.addSubview(subNameLbl)
+        productList.addSubview(newLabel(CGRectMake(10, subY, wdth - 40 - 80, 21),
+            text: Int(nb).description + " " + pr.valueForKey("name").description, align: NSTextAlignment.Left))
         
-        var subPriceLbl = newLabel(CGRectMake(wdth - 80 - 30, subY, 80, 21),
-            text: NSString(format: "%.02f", locale: nil, (price * nb)) + "€",
-            align: NSTextAlignment.Right)
-        productList.addSubview(subPriceLbl)
+        productList.addSubview(newLabel(CGRectMake(wdth - 80 - 30, subY, 80, 21),
+            text: NSString(format: "%.02f", locale: nil, (price * nb)) + "€", align: NSTextAlignment.Right))
         
-        subY += subNameLbl.frame.height
+        subY += 21
         
         if pr.valueForKey("extra") != nil {
             var extraLbl = newLabel(CGRectMake(30, subY, wdth-60, 10),
@@ -281,31 +321,61 @@ class OrderView: UIView, RestClientProtocol {
         let txtWhite = UIColor(white: 1, alpha: 0.8)
         y += 10
         var discardB = newButton(CGRectMake(10, y, 80, 50),
-            color: UIColor(red: 0.8, green: 0, blue: 0, alpha: 1), title: "Annuler")
-        discardB.addTarget(self, action: "discard", forControlEvents: UIControlEvents.TouchDown)
+            color: red, title: "Annuler")
+        discardB.addTarget(self, action: "askForConfirmation", forControlEvents: UIControlEvents.TouchDown)
         addSubview(discardB)
         
         var validateB = newButton(CGRectMake(80 + 20, y, frame.size.width - 80 - 30, 50),
-            color: UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1), title: "Etape suivante")
+            color: green, title: "Etape suivante")
         validateB.addTarget(self, action: "validate", forControlEvents: UIControlEvents.TouchDown)
         addSubview(validateB)
         y += 10 + validateB.frame.size.height
     }
     
+    func setConfirmButtons(){
+        grayBG = UILabel(frame: CGRectMake(0, 0, frame.width, frame.height))
+        grayBG.backgroundColor = UIColor(white: 0, alpha: 0.7)
+        addSubview(grayBG)
+        
+        var d = frame.width / 13
+        confirmB = newButton(CGRectMake(d * 2, frame.height/2 - d, d * 4, d * 2), color: red, title: "Confirmer")
+        confirmB.addTarget(self, action: "discard", forControlEvents: UIControlEvents.TouchDown)
+        addSubview(confirmB)
+        
+        cancelB = newButton(CGRectMake(d * 7, frame.height/2 - d, d * 4, d * 2), color: green, title: "Annuler")
+        cancelB.addTarget(self, action: "cancel", forControlEvents: UIControlEvents.TouchDown)
+        addSubview(cancelB)
+        
+        if (status != "confirm") { setHideConfirmation(true) }
+    }
+    
     func setDetailInfo() {
         y = 5
         
-        setCircle()
-        setLogo()
-        setCenterLogo()
+        if (source != nil) {
+            setCircle()
+            setLogo()
+            setCenterLogo()
+            
+            setUserName()
+            setDetails()
+            setPayedUnpayed()
+            addSeparator()
+            setProducts()
+            addSeparator()
+            setPrice()
+        }
         
-        setUserName()
-        setDetails()
-        setUnpayed()
-        addSeparator()
-        setProducts()
-        addSeparator()
-        setPrice()
         setButtons()
+        setConfirmButtons()
     }
+    
+    
+    // MARK: - Hide/show
+    func setHideConfirmation(hidden: Bool){
+        grayBG.hidden = hidden
+        cancelB.hidden = hidden
+        confirmB.hidden = hidden
+    }
+    
 }

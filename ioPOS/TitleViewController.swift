@@ -11,6 +11,7 @@ import CoreData
 
 class TitleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, RestClientProtocol {
     
+    // MARK: - Attributes
     @IBOutlet weak var filterBar: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var menuBar: UIView!
@@ -31,6 +32,7 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     var filter = "All"
     var searchtext = ""
     
+    // MARK: - Simili-constructor
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -377,7 +379,13 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func setDetailInfo(o: NSObject) {
+        if (detailView.status == "confirm") {
+            if (detailView.id != o.valueForKey("id").description){
+                    detailView.status = "default"
+            }
+        }
         detailView.source = o
+        detailView.id = o.valueForKey("id").description
         detailView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         detailView.setDetailInfo()
     }

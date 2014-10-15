@@ -10,6 +10,7 @@ import UIKit
 
 class OrderTableViewCell: UITableViewCell, RestClientProtocol {
 
+    // MARK: - Attributes
     let txtColor = UIColor(white: 1, alpha: 0.8)
     let darkGray = UIColor(red: 0.3, green: 0.32, blue: 0.32, alpha: 1)
     let lightGray = UIColor(white: 0.5, alpha: 1)
@@ -21,6 +22,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
     var parent: TitleViewController?
     var main: UIView?
     
+    // MARK: - Overrides
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -162,8 +164,9 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         if source!.valueForKey("total_unpayed") != nil {
             var unpayed = source!.valueForKey("total_unpayed") as Float > 0
             let width: CGFloat = (frame.size.width - 144) / 2
+            
             var payeStmp = UILabel(frame: CGRectMake(width + 64, 99, width, 30))
-            payeStmp.backgroundColor = unpayed ? UIColor(red: 1, green: 0.5, blue: 0, alpha: 1) : UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
+            payeStmp.backgroundColor = UIColor(red: 1, green: 0.5, blue: 0, alpha: 1)
             if unpayed { contentView.addSubview(payeStmp) }
             
             var wdth: CGFloat = unpayed ? 23 : 18
@@ -241,6 +244,7 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         contentView.addSubview(timeLbl)
     }
     
+    // TODO: Define UI
     func setButtons() {
         let status = (source != nil && source!.valueForKey("status") != nil) ? source!.valueForKey("status").description : "DONE"
         if status == "INIT" {
@@ -249,10 +253,10 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
             validateB.addTarget(self, action: "validate", forControlEvents: UIControlEvents.TouchDown)
             contentView.addSubview(validateB)
             
-            var discardB = newButton(CGRectMake(frame.size.width - 76, 99,64, 30),
+            /*var discardB = newButton(CGRectMake(frame.size.width - 76, 99,64, 30),
                 color: UIColor(red: 0.8, green: 0, blue: 0, alpha: 1), title: "Icone_Discard.png")
             discardB.addTarget(self, action: "discard", forControlEvents: UIControlEvents.TouchDown)
-            contentView.addSubview(discardB)
+            contentView.addSubview(discardB)*/
         }
     }
     
@@ -260,10 +264,6 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         source = o
         
         backgroundColor = darkDarkGray
-        /*addSeparator(CGRectMake(0, 0, frame.size.width, 15))
-        addSeparator(CGRectMake(0, frame.size.height - 45, frame.size.width, 45))
-        addSeparator(CGRectMake(0, 0, 100, frame.size.height))
-        addSeparator(CGRectMake(frame.size.width - 80, 0, 100, frame.size.height))*/
         addHighlight()
         
         let nameSize = setClientLabel()
