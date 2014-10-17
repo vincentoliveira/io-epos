@@ -77,14 +77,18 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         menuBar.backgroundColor = UIColor(red: 0.21, green: 0.235, blue: 0.26, alpha: 1)
         
+        setReloadButton()
+        
+        addShadows()
+    }
+    
+    func setReloadButton(){
         reloadButton.frame = activityIndicatorView.frame
         let aSelector: Selector = "loadOrders"
         reloadButton.addTarget(self, action: aSelector, forControlEvents: UIControlEvents.TouchUpInside)
         var buttonimg = UIImageView(frame: CGRectMake(0, 0, reloadButton.frame.width, reloadButton.frame.height))
-        buttonimg.image = UIImage(named: "Icone_Ellipse-Green.png")
+        buttonimg.image = UIImage(named: "Icone_Reload.png")
         reloadButton.addSubview(buttonimg)
-        
-        addShadows()
     }
     
     func addShadows(){
@@ -426,7 +430,8 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         selectedItems = items
         filterContentForSearchText(searchtext)
         tableView.reloadData()
-        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+        if (chosen >= 0) {
+            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)}
     }
     func filterNew() {
         filter = "New"
@@ -435,7 +440,8 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         })
         filterContentForSearchText(searchtext)
         tableView.reloadData()
-        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+        if (chosen >= 0) {
+            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)}
     }
     func filterInProgress() {
         filter = "InProgress"
@@ -444,16 +450,18 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         })
         filterContentForSearchText(searchtext)
         tableView.reloadData()
-        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+        if (chosen >= 0) {
+            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)}
     }
     func filterDone() {
         filter = "Done"
         selectedItems = items.filter({( cart: NSObject) -> Bool in
-            return cart.valueForKey("status") as NSString == "DONE"
+            return cart.valueForKey("status") != nil && cart.valueForKey("status") as NSString == "DONE"
         })
         filterContentForSearchText(searchtext)
         tableView.reloadData()
-        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+        if (chosen >= 0) {
+            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)}
     }
     func filterNoPay() {
         filter = "NoPay"
@@ -462,13 +470,15 @@ class TitleViewController: UIViewController, UITableViewDataSource, UITableViewD
         })
         filterContentForSearchText(searchtext)
         tableView.reloadData()
-        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+        if (chosen >= 0) {
+            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)}
     }
     func filterHistory() {
         filter = "History"
         selectedItems = items
         filterContentForSearchText(searchtext)
         tableView.reloadData()
-        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)
+        if (chosen >= 0) {
+            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: chosen, inSection: 0))?.setHighlighted(true, animated: false)}
     }
 }

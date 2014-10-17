@@ -238,7 +238,26 @@ class OrderTableViewCell: UITableViewCell, RestClientProtocol {
         contentView.addSubview(timeStmp)
         
         var nstime : NSString = (source!.valueForKey("delivery") != nil) ? source!.valueForKey("delivery").description : "...........??:??.."
-        var time: String = (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
+        var today = NSDate().description
+        var year = nstime.substringToIndex(4)
+        if (year == today.substringToIndex(advance(today.startIndex, 4))) { year = "" }
+        else { year = "/" + year }
+        
+        var date = ""
+        
+        var month = (nstime.substringFromIndex(5) as NSString).substringToIndex(2)
+        var day = (nstime.substringFromIndex(8) as NSString).substringToIndex(2)
+        var todayDay = (today.substringFromIndex(advance(today.startIndex, 8)) as NSString).substringToIndex(2)
+        var todayMonth = (today.substringFromIndex(advance(today.startIndex, 5)) as NSString).substringToIndex(2)
+
+        if ((year != "") || (month != todayMonth) || (day != todayDay)) {
+                date = "   " + day + "/" + month + year
+            println(nstime + " =?= " + today)
+            println("M: " + month + " = " + todayMonth)
+            println("D: " + day + " = " + todayDay)
+        }
+        
+        var time: String = (nstime.substringFromIndex(11) as NSString).substringToIndex(5) + date
         var timeLbl = newLabel(CGRectMake(60, 99, width, 30), text: time, align: NSTextAlignment.Center)
         timeLbl.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         contentView.addSubview(timeLbl)

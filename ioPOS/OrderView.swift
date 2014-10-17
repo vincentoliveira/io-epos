@@ -145,7 +145,8 @@ class OrderView: UIView, RestClientProtocol {
             nblines += CGFloat(em.length / 33) + 1
         }
         var nstime : NSString = source!.valueForKey("delivery").description
-        id += "N°" + source!.valueForKey("id").description + "\nCommande " + source!.valueForKey("source").description + "\n" + (nstime.substringFromIndex(11) as NSString).substringToIndex(5)
+        var day = (nstime.substringFromIndex(8) as NSString).substringToIndex(2) + "/" + (nstime.substringFromIndex(5) as NSString).substringToIndex(2) + "/" + nstime.substringToIndex(4)
+        id += "N°" + source!.valueForKey("id").description + "\nCommande " + source!.valueForKey("source").description + "\n" + (nstime.substringFromIndex(11) as NSString).substringToIndex(5) + " le " + day
         
         var idLbl = newLabel(CGRectMake(115, y, frame.width - 125, 21 * nblines), text: id, align: NSTextAlignment.Left)
         idLbl.textColor = UIColor(white: 0.3, alpha: 1)

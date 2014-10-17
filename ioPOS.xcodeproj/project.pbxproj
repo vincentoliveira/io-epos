@@ -41,6 +41,7 @@
 		BFD0411D19E7ED2C0073AB73 /* Icone_InProgress-Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD0410A19E7ED2C0073AB73 /* Icone_InProgress-Gray.png */; };
 		BFD0411E19E7ED2C0073AB73 /* Icone_InProgress.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD0410B19E7ED2C0073AB73 /* Icone_InProgress.png */; };
 		BFD0411F19E7ED2C0073AB73 /* Icone_NoPay-Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD0410C19E7ED2C0073AB73 /* Icone_NoPay-Gray.png */; };
+		BFD4428519EFB76E00EE51D5 /* Icone_Reload.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD4428419EFB76E00EE51D5 /* Icone_Reload.png */; };
 		BFD5874C19DEE1D500CA5F5B /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD5874B19DEE1D500CA5F5B /* OrderTableViewCell.swift */; };
 		BFEA83B619E2EBB000F5AE79 /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEA83B519E2EBB000F5AE79 /* OrderView.swift */; };
 /* End PBXBuildFile section */
@@ -94,6 +95,7 @@
 		BFD0410A19E7ED2C0073AB73 /* Icone_InProgress-Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icone_InProgress-Gray.png"; path = "Icones/Icone_InProgress-Gray.png"; sourceTree = "<group>"; };
 		BFD0410B19E7ED2C0073AB73 /* Icone_InProgress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icone_InProgress.png; path = Icones/Icone_InProgress.png; sourceTree = "<group>"; };
 		BFD0410C19E7ED2C0073AB73 /* Icone_NoPay-Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icone_NoPay-Gray.png"; path = "Icones/Icone_NoPay-Gray.png"; sourceTree = "<group>"; };
+		BFD4428419EFB76E00EE51D5 /* Icone_Reload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icone_Reload.png; path = ../../../Downloads/Icone_Reload.png; sourceTree = "<group>"; };
 		BFD5874B19DEE1D500CA5F5B /* OrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		BFEA83B519E2EBB000F5AE79 /* OrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +194,7 @@
 		BFC5A93B19E5868900EB48E2 /* Icones */ = {
 			isa = PBXGroup;
 			children = (
+				BFD4428419EFB76E00EE51D5 /* Icone_Reload.png */,
 				BFCC336319ED62BE00E3CD1D /* Icone_NoPay.png */,
 				BFD040FA19E7ED2C0073AB73 /* Icone_New-Gray.png */,
 				BFCC330F19ED2B1100E3CD1D /* Icone_New-Green.png */,
@@ -305,6 +308,7 @@
 				BF78FF6019DC590200E60ED0 /* Main.storyboard in Resources */,
 				BFD0411C19E7ED2C0073AB73 /* Icone_InProgress-Blue.png in Resources */,
 				BFCC336419ED62BE00E3CD1D /* Icone_NoPay.png in Resources */,
+				BFD4428519EFB76E00EE51D5 /* Icone_Reload.png in Resources */,
 				BFD0411519E7ED2C0073AB73 /* Icone_Done-Gray.png in Resources */,
 				BFD0411319E7ED2C0073AB73 /* Icone_Bag.png in Resources */,
 				BFD0411219E7ED2C0073AB73 /* Icone_Bag-Black.png in Resources */,
